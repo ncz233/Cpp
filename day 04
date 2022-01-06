@@ -1,0 +1,310 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<iostream>
+#include<time.h>
+#include<stdio.h>
+using namespace std;
+
+//循环语句 - C一样
+//作用：满足循环条件，执行循环语句
+//语法：while(循环条件){循环内容};
+// 解释：只要循环条件结果为真，就执行循环内容
+
+//int main()
+//{
+//	//while循环
+//	//1.没有循环写的
+//	//在屏幕中打印0~9着10个数字
+//	//int num = 0;
+//	//cout << num << endl;
+//	//num++;
+//	//cout << num << endl;
+//	////.....
+//
+//	////有循环写的
+//	//int num = 0;
+//	////while()中填入循环条件
+//	////注意事项：在写循环一定要避免死循环
+//	//while (num<10)
+//	//{
+//	//	cout << num++ << endl;//这样时很危险的
+//	//	//推荐还是老老实实的num++吧
+//	//}
+//	////注意：在执行循环语句的时候，程序必须提供跳出循环的出口，否则死循环
+//
+//	system("pause");
+//	return 0;
+//}
+
+//案列：猜数字
+//int main()
+//{
+//	//1.系统生成随机数
+//	srand((unsigned int)time(NULL));
+//	int num = rand()%100+1;
+//	cout << num << endl;
+//	cout << "猜数字" << endl;
+//
+//	//2.玩家进行猜测
+//	int val = 0;
+//	//cin >> val;
+//	//3.判断玩家的猜测
+//	while (1)
+//	{
+//		cin >> val;
+//		if (val > num)
+//		{
+//			cout << "大了" << endl;
+//		}
+//		else if (val < num)
+//		{
+//			cout << "小了" << endl;
+//		}
+//		else
+//		{
+//			cout << "对了\n答案是 = " << num << endl;
+//			break;
+//		}
+//	}
+//	//猜对 退出游戏，猜错 提示猜对结果，大还是小，并返回第二步
+//	system("pause");
+//	return 0;
+//}
+
+//do...while循环语句 - c一样
+//语法:do{循环内容}while(循环条件)
+// 注意:与while的区别在于do...while会先执行一次循环语句，在判断循环条件
+
+//int main()
+//{
+//	//do...while语句
+//	//在屏幕中输出0到9这10个数字
+//	int num = 0;
+//	do
+//	{
+//		cout << num << endl;
+//		num++;
+//	} while (num);
+//	//do...while和while循环的区别是do...while会先执行一次循环内容
+//	while (num)
+//	{
+//		cout << num << endl;
+//		num++;
+//	}
+//	//区别在上面
+//	system("pause");
+//	return 0;
+//}
+
+//案例：水仙花数
+//用do...while解决
+//提示：对数字取模10就可以获取到个位
+//这个还不够好，因为这个范围在这里，以后自己做一个无范围的
+
+//int main()
+//{
+//	//1.范围100~999，打印所有三位数字
+//	int num = 100;
+//	do
+//	{
+//		int a = 0;//个
+//		int b = 0;//十
+//		int c = 0;//百
+//
+//		a = num % 10;
+//		b = num / 10 % 10;
+//		c = num / 100;
+//		//找到水仙花数
+//		if (a*a*a + b*b*b + c*c*c == num)//如果是水仙花数判断
+//		{
+//			cout << num << endl;
+//		}
+//		num++;
+//	} while (num < 1000);
+//	system("pause");
+//	return 0;
+//}
+
+//for循环语句 - c一样
+//作用：满足循环条件，执行循环语句
+// 语法：for(起始表达式;条件判断表达式;末尾循环体){循环内容}
+//int main()
+//{
+//	//for循环
+//	//从0~9打印
+//	int i = 0;
+//	for (i = 0; i < 10; i++)
+//	{
+//		cout << i << endl;
+//	}
+//	printf("\n");
+//	//可以看成下面的代码,是把看着麻烦
+//	//int j = 0;
+//	//for ( ; ; )
+//	//{
+//	//	if (j < 10)
+//	//	{
+//	//		break;
+//	//	}
+//	//	cout << j << endl;
+//	//	j++;
+//	//}
+//
+//	system("pause");
+//	return 0;
+//}
+
+//案列:敲桌子
+//1~100
+//个位上有7、十位上有7、7的倍数，打印桌子
+//int main()
+//{
+//	for (int i = 1; i <= 100; i++)
+//	{
+//		if (i % 10 == 7 || i / 10 == 7 || i % 7 == 0)
+//		{
+//			cout << "桌子" << endl;
+//		}
+//		else
+//		{
+//			cout << i << endl;
+//		}
+//	}
+//	system("pause");
+//	return 0;
+//}
+
+//嵌套循环 - c一样
+//作用：在循环体中再嵌套一层循环，解决一些实际问题
+//int main()
+//{
+//	//列子 - 实现星图
+//	// 外层循环一次，内层执行一周
+//	//外层循环
+//	for (int i = 0; i < 10; i++)
+//	{
+//		//内层循环
+//		for (int j = 0; j < 10; j++)
+//		{
+//			//如果都是变量i的话，打印出的i会就近原则去选择离得最近的i变量
+//			cout << " *";
+//		}
+//		printf("\n");
+//	}
+//	system("pause");
+//	return 0;
+//}
+
+//案列：九九乘法表
+//int main()
+//{
+//	for (int i = 1; i < 10; i++)
+//	{
+//		for (int j = 1; j <= i; j++)
+//		{
+//			//printf("%d*%d=%-2d ",j,i,i*j);
+//			cout << j << "*" << i << "=" << j * i<<"\t";
+//		}
+//		cout << endl;
+//	}
+//	system("pause");
+//	return 0;
+//}
+
+//跳转语句 - c一样
+//break语句
+// 作用 - 用于跳出选择结构或者循环结构(只会跳出属于它的循环，最下面有案例)
+//时机 
+// 出现在switch条件语句中，作用是终止case并跳出switch
+// 出现在循环语句中，作用是跳出当前的循环语句
+// 出现在嵌套循环中，跳出最近的内层循环语句
+
+//int main()
+//{
+//	//break的使用时机
+//	// 出现在switch语句中
+//	//cout << "请选择副本难度" << endl;
+//	//cout << "1.普通" << endl;
+//	//cout << "2.中等" << endl;
+//	//cout << "3.困难" << endl;
+//	//int select = 0;
+//	//cin >> select;
+//	//switch (select)
+//	//{
+//	//case 1:
+//	//	cout << "普通难度" << endl;
+//	//	break;
+//	//case 2:
+//	//	cout << "中等难度" << endl;
+//	//	break;
+//	//case 3:
+//	//	cout << "困难难度" << endl;
+//	//	break;
+//	//default:
+//	//	break;
+//	//}
+//	
+//	// 出现在循环语句中
+//	//for (int i = 0; i < 10; i++)
+//	//{
+//	//	cout << i << endl;
+//	//	if (i == 5)//退出不打印
+//	//	{
+//	//		break;
+//	//	}
+//	//}
+//	
+//	// 出现在嵌套循环语句中
+//	for (int i = 0; i < 10; i++)
+//	{
+//		for (int j = 0; j < 10; j++)
+//		{
+//			if (j == 5)
+//			{
+//				break;//退出
+//			}
+//			printf("* ");
+//		}
+//		printf("\n");
+//	}
+//
+//	system("pause");
+//	return 0;
+//}
+
+//continue语句 - c一样
+//作用 - 在循环语句中，跳过本次循环中余下尚未执行的语句，执行下一次循环
+//注意：continue和break的区别 - continue不会使整个循环终止，而break会跳出循环
+
+//int main()
+//{
+//	//continue语句
+//	for (int i = 0; i < 100; i++)//可以i+=2是输出偶数
+//	{
+//		//奇数输出，偶数不输出
+//		if (i%2 == 0)
+//		{
+//			continue;//可以筛选条件，执行到此就不在向下执行，执行下一次循环
+//		}
+//		cout << i << endl;
+//	}
+//	system("pause");
+//	return 0;
+//}
+
+int main()
+{
+	for (int i = 1; i < 10; i++)
+	{
+		for (int j = 1; j <= i; j++)
+		{
+			printf("*");
+			printf("*");
+			break;
+			//printf("%d*%d=%-2d ",j,i,i*j);
+			//cout << j << "*" << i << "=" << j * i<<"\t";
+		}
+		cout << endl;
+	}
+	system("pause");
+	return 0;
+}
