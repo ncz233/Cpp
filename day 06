@@ -1,0 +1,186 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"swap.h"
+using namespace std;
+//函数 - C一样
+//概述 - 将一段经常使用的代码封装起来，减少重复代码
+// 一个较大的程序，一般分为若干个程序块，每个模块实现特定的功能
+//函数的定义 - 一般分为5个步骤
+// 1.返回值类型
+// 2.函数名
+// 3.参数列表
+// 4.函数体语句
+// 5.return表达式
+//语法 - 返回类型 函数名 参数列表
+// {
+// 函数体语句
+// return 表达式
+// }
+
+//创建函数-也称定义函数
+//函数定义的时候，num1和num2并没有真实数据
+//他只是一个形式上的参数，简称形参
+//void add(int* n1, int n2)//指针类型
+//{
+//	*n1 += n2;
+//}
+//int add2(int num1, int num2)//非指针类型
+//{
+//	int sum =num1+ num2;
+//	return sum;
+//}
+//int main()
+//{
+//	//加法函数
+//	int a = 22;
+//	int b = 33;
+//	//函数调用
+//	//语法 - 函数名(参数)
+//	//当调用函数时候，实参的值会传递给形参
+//	cout << add2(a,b) << endl;//传值，a和b称为 实际参数简称实参
+//	add(&a, b);//传址
+//	printf("%d\n", a);
+//	//printf("%d", add(&a, b));//空类型不能打印
+//
+//	system("pause");
+//	return 0;
+//}
+
+//值传递 - C一样
+//所谓值传递，就是函数调用时实参将数值传入给形参
+//值传递，如果形参发生改变，并不会影响实参
+
+//定义函数 - 实现两个数字进行交换的函数
+//void swap1(int* num1, int* num2)//指针类型
+//{
+//	int n = *num1;
+//	*num1 = *num2;
+//	*num2 = n;
+//}
+//void swap2(int num1, int num2)//非指针类型
+//{
+//	int n = num1;
+//	num1 = num2;
+//	num2 = n;
+//	printf("1 = %d\n2 = %d\n", num1, num2);
+//	return;
+//}
+//int main()
+//{
+//	//交换函数
+//	int a = 10;
+//	int b = 20;
+//	swap2(a, b);
+//	cout << a << endl << b << endl;
+//	swap1(&a, &b);
+//	printf("a = %d\nb = %d\n", a, b);
+//	system("pause");
+//	return 0;
+//}
+
+//函数的常见形式 - C一样
+// 有4种
+// 无参无反
+// 有参无返
+// 无参有返
+// 有参有返
+
+// 无参无反
+//void test1()
+//{
+//	cout << "this is test1" << endl;
+//}
+//// 有参无返
+//void test2(int a)
+//{
+//	cout << "this is test2 a = " <<a<< endl;
+//}
+//// 无参有返
+//int test3()
+//{
+//	cout << "this is test3" << endl;
+//	return 1000;
+//}
+//// 有参有返
+//int test4(int a)
+//{
+//	cout << "this is test4 a = " <<a<< endl;
+//	return a;
+//}
+//int main()
+//{
+//	//函数调用
+//	test1();
+//	test2(100);
+//	printf("test3 = %d\n",test3());
+//	printf("test4 = %d\n",test4(10000));
+//
+//	system("pause");
+//	return 0;
+//}
+
+//函数声明 - C一样
+// 作用：告诉编译器函数名称以及如何调用函数。函数的实际主体可以单独定义
+// 同一函数的声明可以多次，但是函数的定义只能有一次
+
+//提前告诉编译器的存在，可以利用函数声明
+//int Mymax(int num1, int num2);
+//int main()
+//{
+//	int a = 10;
+//	int b = 20;
+//	cout << Mymax(a, b) << endl;
+//
+//	system("pause");
+//	return 0;
+//}
+////函数定义比大小函数
+//int Mymax(int num1, int num2)//非指针类型
+//{
+//	return num1 > num2 ? num1 : num2;
+//}
+
+//函数的分文件编写 - C一样
+//作用 - 让代码结构更加清晰
+//分为4步骤
+// 创建.h头文件
+// 创建.cpp源文件
+// 在头文件中写函数的声明 - 写头文件
+// 在源文件中写函数的定义 - 写刚刚创建的头文件和框架
+
+//函数的份文件编写
+//实现一个两个数字进行交换的函数
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	swap(&a, &b);
+	printf("a = %d\nb = %d\n", a, b);
+
+	system("pause");
+	return 0;
+}
+
+
+
+==========================================================swap.h
+#pragma once
+#include<iostream>
+
+//函数的声明
+void swap(int* num1, int* num2);
+
+
+===========================================================swap.cpp
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"swap.h"
+using namespace std;
+
+//函数的定义
+void swap(int* num1, int* num2)//指针类型
+{
+	int n = *num1;
+	*num1 = *num2;
+	*num2 = n;
+	cout << "a = " << *num1 << endl << "b = " << *num2 << endl;
+}
