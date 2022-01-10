@@ -1,0 +1,325 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<iostream>
+#include<stdio.h>
+#include<string>
+using namespace std;
+
+//指针和数组 - C一样
+//作用 - 利用指针访问数组中的元素
+//指针的类型不同就代表走一步多大
+
+//int main()
+//{
+	//指针和数组
+	//利用指针访问数组中的元素
+	//int a = 10;
+	//int arr[] = { 1,2,3,4,5,6,7,8,9 };
+	//cout << a << endl;
+	//cout << arr << endl;
+	//int* p = arr;//arr是数组首地址
+	//cout << *p++/*向后偏移4字节空间*/ << endl;
+	//cout << *(p++)/*同上*/ << endl;
+	//cout << *(p++)/*+1*/ << endl;
+	////指针打印数组
+	//int len = sizeof(arr) / sizeof(arr[0]);
+	//for (int i = 0; i < len; i++)
+	//{
+	//	cout << *p+i << endl;
+	//}
+
+//	system("pause");
+//	return 0;
+//}
+
+//指针和函数
+//如果不想修改实参，就用值传递，如果想修改实参，就用值传递
+//作用 - 利用指针操作函数参数，可以秀爱实参的值
+//void swap01(int a, int b)
+//{
+//	int n = a;
+//	a = b;
+//	b = n;
+//	cout << a << endl << b << endl;
+//}
+//void swap02(int* a, int* b)
+//{
+//	int n = *a;
+//	*a = *b;
+//	*b = n;
+//}
+//int main()
+//{
+//	//1.值传递
+//	//传入的是值，也就是拷贝一份
+//	int a = 10;
+//	int b = 20;
+//	swap01(a, b);//两数交换
+//
+//	//2.地址传递
+//	//地址交换传入的是地址
+//	swap02(&a, &b);//两数交换
+//	printf("a = %d\nb = %d", a, b);
+//
+//	system("pause");
+//	return 0;
+//}
+
+//指针、数组、函数碰到一起 - C一样，就是传参不能是arr[]这个了，型参也不能是arr[]这个了
+//冒泡排序
+
+//void bubbleSort(int* p, int len)
+//{
+//	for (int i = 0; i < len-1; i++)
+//	{
+//		for (int j = i; j < len; j++)
+//		{
+//			if (p[i]>p[j])
+//			{
+//				int temp = p[i];
+//				p[i] = p[j];
+//				p[j] = temp;
+//			}
+//		}
+//	}
+//}
+//int main()
+//{
+//	int arr[] = { 10,3,5,7,9,2,4,6,8,-1 };
+//	int len = sizeof(arr) / sizeof(arr[0]);//别再函数内求长度，因为求的是指针的长度(指针/指针 = 1)懂
+//	bubbleSort(arr, len);//数组名是数组的首地址
+//	for (int i = 0; i < len; i++)
+//	{
+//		cout << arr[i] << endl;
+//	}
+//
+//	system("pause");
+//	return 0;
+//}
+
+//结构体 - 与C不同
+// 大小是需要学习结构体对齐的(我忘了嘿嘿嘿)
+// 还有段(是控制成员的大小，如果不够借位好像)，联合体(我忘了)
+//结构体概念
+//结构体属于用户自定义的数据类型，允许用户存储不同的数据类型
+//结构体定义和使用
+//语法 - struct 结构体名 {结构体成员列表};
+// 创建变量有三种
+// struct结构体名 变量名
+// struct结构体名 变量名 {成员1值，成员2值...}
+// 定义结构体时顺便创建变量 - 不建议用
+
+//创建结构体
+//struct student
+//{
+//	//里面是成员变量
+//	string name;
+//	int age;
+//	int score;
+//}s3;//s3是结构体变量
+//
+//int main()
+//{
+//	//创建学生的类型变量
+//	//创建变量有三种
+//	//struct结构体名 变量名
+//	//C++中可以用C不可以用
+//	student s1;//创建但未初始化
+//	//赋值 - 初始化
+//	s1.name = "张三";
+//	s1.age = 18;
+//	s1.score = 100;
+//	cout << "姓名：" << s1.name << " 年龄：" << s1.age << " 分数：" << s1.score << endl;
+//	//printf("%s %d %d ", s1.name, s1.age, s1.score);
+//
+//	//struct结构体名 变量名 {成员1值，成员2值...}
+//	struct student s2 = { "李四",20,80 };//创建初始化一气呵成
+//	cout << "姓名：" << s2.name << " 年龄：" << s2.age << " 分数：" << s2.score << endl;
+//
+//	//定义结构体时顺便创建变量
+//	s3.name = "王五";
+//	s3.age = 25;
+//	s3.score = 60;
+//	cout << "姓名：" << s3.name << " 年龄：" << s3.age << " 分数：" << s3.score << endl;
+//
+//	system("pause");
+//	return 0;
+//}
+
+//结构体数组 - 不一样
+//作用 - 将自定义的结构体放入到数组中方便维护
+//语法 - struct 结构体名 数组名[元素个数] = {{},{},{}}
+
+//struct student
+//{
+//	//里面是成员变量
+//	string name;
+//	int age;
+//	int score;
+//};
+//
+//int main()
+//{
+//	//创建结构体数组
+//	struct student stuArr[3] =
+//	{
+//		{"张三",18,100},
+//		{"李四",28,99},
+//		{"王五",38,66}
+//	};
+//
+//	//给结构体数组中的元素赋值
+//	stuArr[2].name = "赵六";
+//	stuArr[2].age = 80;
+//	stuArr[2].score = 60;
+//
+//	//遍历
+//	int len = sizeof(stuArr) / sizeof(stuArr[0]);
+//	for (int i = 0; i < len; i++)
+//	{
+//		cout << " 姓名：" << stuArr[i].name 
+//			<< " 年龄：" << stuArr[i].age 
+//			<< " 分数：" << stuArr[i].score << endl;
+//	}
+//
+//	system("pause");
+//	return 0;
+//}
+
+//结构体指针 - C一样
+//作用：通过指针访问结构体中的成员
+// 利用操作符->可以通过结构体指针访问结构体属性
+//总结 - 结构体指针可以通过'->'操作符来访问结构体中的成员
+
+//struct student
+//{
+//	string name;
+//	int age;
+//	int score;
+//};
+//
+//int main()
+//{
+//	//创建变量
+//	struct student s = { "张三",18,100 };
+//
+//	//通过指针指向结构体变量
+//	struct student* p = &s;
+//
+//	//通过指针访问结构体变量
+//	//通过结构体指针访问结构体中的属性，需要利用'->'
+//	cout << "姓名：" << p->name << " 年龄：" << p->age << " 分数：" << p->score << endl;
+//
+//	system("pause");
+//	return 0;
+//}
+
+//结构体嵌套结构体 - C一样
+//作用 - 结构体中的成员可以是另一个结构体
+//类如 - 每个老师辅导一个学院，一个老师的结构体中，记录一个学生的结构体
+//注意：结构体不能只接嵌套结构体，要有成员变量
+
+//定义学生的结构体
+//struct student
+//{
+//	string name;
+//	int age;
+//	int score;
+//};
+////定义老师的结构体
+//struct teacher
+//{
+//	int id;
+//	string name;
+//	int age;
+//	struct student stu;//可以用另一个结构体作为本结构体的成员，
+//};
+//
+//int main()
+//{
+//	struct teacher tea = { 233,"张三",20,{"李四",18,100} };
+//	struct teacher* p = &tea;
+//	//也可以先创建在初始化
+//
+//	cout << "姓名：" << p->name << " 年龄：" << p->age << " id：" << p->id <<"姓名: "<<p->stu.name<<"年龄"<<p->stu.age<<"分数："<<p->stu.score<< endl;
+//
+//	system("pause");
+//	return 0;
+//}
+
+//结构体函数参数 - C一样
+//作用 - 将结构体作为参数像函数中传递
+// 传递方式有两种
+// 值传递 - 不会改实参，慢
+// 址传递 - 会改实参，并且快,但是一般都是址传递，因为占空间小而且快
+
+//定义学生的结构体
+//struct student
+//{
+//	string name;
+//	int age;
+//	int score;
+//};
+////值传递
+//void printStudent1(struct student s)
+//{
+//	s.age = 100;
+//	cout << "姓名：" << s.name << " 年龄：" << s.age << " 分数：" << s.score << endl;
+//
+//}
+////址传递
+//void printStudent2(struct student* s)
+//{
+//	s->age = 10;
+//	cout << "姓名：" << s->name << " 年龄：" << s->age << " 分数：" << s->score << endl;
+//}
+//int main()
+//{
+//	//结构体做函数参数
+//	//将学生传入到一个参数中，打印学生身上的所有信息
+//	
+//	//创建
+//	struct student s;
+//	s.name = "张三";
+//	s.age = 18;
+//	s.score = 100;
+//	printStudent1(s);
+//	cout << "main中结果 - " << "姓名：" << s.name << " 年龄：" << s.age << " 分数：" << s.score << endl;
+//
+//	struct student* p = &s;
+//	printStudent2(p);
+//	cout << "main中结果 - " << "姓名：" << s.name << " 年龄：" << s.age << " 分数：" << s.score << endl;
+//
+//	system("pause");
+//	return 0;
+//}
+
+//结构体中const使用的场景
+// 作用 - 用const来防止误操作
+
+struct student
+{
+	string name;
+	int age;
+	int score;
+};
+//想让他打印，没想到改了，为了防止误操作
+void printStudent(const student* s)//常量指针
+{
+	//s->age = 100;//加入const之后，一旦有修改的操作就会报错，可以防止我们的误操作
+	cout << "姓名：" << s->name << " 年龄：" << s->age << " 分数：" << s->score << endl;
+}
+
+
+int main()
+{
+	//创建
+	struct student s = { "张三",15,70 };
+	student* p = &s;
+	//打印 - 修改 - 必须是址传递
+	printStudent(&s);
+
+	cout << "姓名：" << p->name << " 年龄：" << p->age << " 分数：" << p->score << endl;
+
+	system("pause");
+	return 0;
+}
