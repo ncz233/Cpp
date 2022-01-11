@@ -1,0 +1,188 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<iostream>
+#include<string>
+#include<time.h>
+using namespace std;
+
+//案列 - 每个老师带5个同学，一共3位老师
+//要求如下 - 老师里有姓名和5同学，学生有姓名和考试分数，通过函数给老师及所带学生赋值最终打印出老师数据及学生数据
+//我自己做的能用就是太挫了
+
+//struct student
+//{
+//	string name;
+//	int scote;
+//};
+//struct teacher
+//{
+//	string name;
+//	struct student stuArr[5];
+//};
+//
+//void allocateSpace(teacher* tea, int len)
+//{
+//	string nameseed = "ABCDE";
+//	for (int i = 0; i < len; i++)
+//	{
+//		tea[i].name = "teacher_";
+//		tea[i].name += nameseed[i];
+//
+//		for (int j = 0; j < 5; j++)
+//		{
+//			int random = rand() % 100 + 1;
+//			tea[i].stuArr[j].name = "student_";
+//			tea[i].stuArr[j].name += nameseed[j];
+//			tea[i].stuArr[j].scote = random;
+//		}
+//	}
+//}
+//void printInfo(struct teacher* tea, int len)
+//{
+//	for (int i = 0; i < len; i++)
+//	{
+//		cout << "姓名：" << tea[i].name << endl;
+//		for (int j = 0; j < 5; j++)
+//		{
+//			cout<< "\t学生姓名：" << tea[i].stuArr[j].name << " 成绩" << tea[i].stuArr[j].scote << endl;
+//		}
+//	}
+//}
+//
+//int main()
+//{
+//	srand((unsigned)time(NULL));//时间戳
+//	//创建几位老师
+//	struct teacher teaArr[3];
+//	int len = sizeof(teaArr) / sizeof(teaArr[0]);
+//
+//	allocateSpace(teaArr,len);
+//
+//	//打印
+//	printInfo(teaArr, len);
+//
+//	//system("pupta");
+//	return 0;
+//}
+
+//int main()
+//{
+//	int i = 0;
+//	//中间相差了8个字节
+//	int arr[] = { 1,2,3,4,5,6,7 };
+//	
+//	for ( i = 0; i <= 9; i++)
+//	{
+//		arr[i] = 0;
+//		printf("hehe\n");
+//		printf("%p\n", i);
+//	}
+//	return 0;
+//}
+
+//案例2 - 创建一个结构体数组，存放5名英雄
+
+
+struct paj
+{
+	string name;
+	int age;
+	string sex;
+};
+void allocateSpace(struct paj* paj, int len)
+{
+	for (int i = 0; i < len; i++)
+	{
+		cin >> paj[i].name;
+		paj[i].age = rand() % 100 + 1;
+		int num = rand() % 2;
+		//printf("%d\n", num);
+		if (num == 1)
+		{
+			paj[i].sex = "男";
+		}
+		else if(num == 0)
+		{
+			paj[i].sex = "女";
+		}
+		else
+		{
+			paj[i].sex = "鬼";
+		}
+	}
+}
+void printInfo(struct paj* paj, int len)
+{
+	for (int i = 0; i < len; i++)
+	{
+		cout << "人物名：" << paj[i].name << " 年龄:" << paj[i].age << " 性别:" << paj[i].sex << endl;
+	}
+}
+void bubbkeSort(struct paj* paj, int len)
+{
+	for (int i = 0; i < len-1; i++)
+	{
+		for (int j = i; j < len; j++)
+		{
+			if (paj[i].age>paj[j].age)
+			{
+				struct paj temp = paj[i];
+				paj[i] = paj[j];
+				paj[j] = temp;
+			}
+		}
+	}
+}
+
+int FintPos(struct paj* paj, int low, int fast)
+{
+	struct paj val = paj[fast];
+	while (low < fast)
+	{
+		while (low < fast && paj[low].age <= val.age)
+		{
+			low++;
+		}
+		paj[fast] = paj[low];
+		while (low < fast && paj[fast].age >= val.age)
+		{
+			fast--;
+		}
+		paj[low] = paj[fast];
+	}
+	paj[low] = val;
+	return fast;
+}
+void QuickSort(struct paj* paj, int low, int fast)
+{
+	int pos;
+	while (low<fast)
+	{
+		pos = FintPos(paj, low, fast);
+		QuickSort(paj, low, pos - 1);
+		QuickSort(paj, pos + 1, fast);
+	}
+}
+
+int main()
+{
+	srand((unsigned int)time(NULL));
+	struct paj pajArr[5];
+	int len = sizeof(pajArr) / sizeof(pajArr[0]);
+	allocateSpace(pajArr,len);
+
+	printInfo(pajArr, len);
+
+	//排序 - 快排
+	//bubbkeSort(pajArr, len);//写个快排，不过出了点小小的bug
+	int low = 0;
+	int fast = len - 1;
+	QuickSort(pajArr, low, fast);
+	//但是快排需要建立在查找基础上
+	//FintPos(pajArr, low, fast);//返回第一个找到的位置
+
+	printf("\n");
+	printInfo(pajArr, len);
+
+	//system("pupta");
+	return 0;
+}
