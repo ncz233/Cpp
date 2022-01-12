@@ -1,0 +1,189 @@
+==================================================xxx.h
+#pragma once
+#include<iostream>
+#include<string>
+using namespace std;
+
+#define MAX 100
+//设计联系人结构体
+struct Person
+{
+	string m_Name;
+	char m_Sex;
+	int m_Age;
+	string m_Phone;
+	string m_Addr;
+};
+
+//通讯录结构体
+struct Addressbooks
+{
+	//通讯录中保存的联系人数组
+	struct Person personArray[MAX];
+
+	//通讯录中当前记录联系人个数
+	int m_len;
+};
+
+//判断人满没有
+int RM(Addressbooks* ress);
+//添加联系人
+void addPerson(Addressbooks* abs);
+
+
+
+
+============================================================xxx.cpp
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"tongxunlu.h"
+using namespace std;
+
+//判断人满
+int RM(Addressbooks* ress)
+{
+	if (ress->m_len == MAX)
+	{
+		cout << "满了" << endl;
+		return 1;
+	}
+	return 0;
+}
+
+//添加
+void addPerson(Addressbooks* abs)
+{
+	if (RM(abs))
+	{
+		//char c = '0';
+		//cout << "是否增容(Y/N)" << endl;
+		//cin >> c;
+		//if (strcmp(c,))
+		//{
+
+		//}
+		return;
+	}
+	else
+	{
+		//姓名
+		cout << "输入姓名" << endl;
+		cin >> abs->personArray[abs->m_len].m_Name;//这样没有可判断空间了最好有临时的
+		//性别
+		cout << "输入性别" << endl;
+		cout << "1--男" << endl;
+		cout << "2--女" << endl;
+		int sex = 0;
+		while (true)
+		{
+			cin >> sex;
+			if (sex == 1)
+			{
+				abs->personArray[abs->m_len].m_Sex = '男';
+				break;
+			}
+			else if (sex == 2)
+			{
+				abs->personArray[abs->m_len].m_Sex = '女';
+				break;
+			}
+			else
+			{
+				cout << "错误重新输入" << endl;
+			}
+		}
+
+		//年龄
+		cout << "年龄" << endl;
+		int age = 0;
+		cin >> age;
+		abs->personArray[abs->m_len].m_Age = age;
+
+		//电话
+		cout << "电话" << endl;
+		string phone;
+		cin >> phone;
+		abs->personArray[abs->m_len].m_Phone = phone;
+
+		//住址
+		cout << "住址" << endl;
+		string address;
+		cin >> address;
+		abs->personArray[abs->m_len].m_Addr = address;
+
+		//更新人数
+		abs->m_len++;
+		cout << "添加成功" << endl;
+
+		//system是系统命令，之前的system("pause")是请安任意键
+		system("pause");
+		system("cls");
+	}
+}
+
+
+
+
+=============================================main.cpp
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"tongxunlu.h"
+using namespace std;
+
+//通讯录管理系统
+//实现的功能如下
+// 增删查改，显示，清空，退出
+//姓名，性别，年龄，联系电话，家庭住址
+
+
+//菜单界面
+void showMenu()
+{
+	cout << "*************************" << endl;
+	cout << "***** 1、添加联系人 *****" << endl;
+	cout << "***** 2、显示联系人 *****" << endl;
+	cout << "***** 3、删除联系人 *****" << endl;
+	cout << "***** 4、查找联系人 *****" << endl;
+	cout << "***** 5、修改联系人 *****" << endl;
+	cout << "***** 6、清空联系人 *****" << endl;
+	cout << "***** 0、退出通讯录 *****" << endl;
+	cout << "*************************" << endl;
+}
+int main()
+{
+	//创建通讯录结构体变量
+	Addressbooks abs;
+	//初始化人员个数
+	abs.m_len = 0;
+	int select = 0;
+	do
+	{
+		showMenu();
+		cin >> select;
+		switch (select)
+		{
+		case 1://添加
+			addPerson(&abs);//传址
+			break;
+		case 2://显示
+			break;
+		case 3://删除
+			break;
+		case 4://查找
+			break;
+		case 5://修改
+			break;
+		case 6://清空
+			break;
+		case 0://退出
+			cout << "拜拜" << endl;
+			break;
+		default://其他
+			cout << "错误鬼" << endl;
+			break;
+		}
+
+	} while (select);
+
+
+	system("pause");
+	return 0;
+}
