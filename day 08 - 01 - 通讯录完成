@@ -1,0 +1,389 @@
+==================================================xxx.h
+#pragma once
+#include<iostream>
+#include<string>
+using namespace std;
+
+#define MAX 100
+//设计联系人结构体
+struct Person
+{
+	string m_Name;
+	int m_Sex;
+	int m_Age;
+	string m_Phone;
+	string m_Addr;
+};
+
+//通讯录结构体
+struct Addressbooks
+{
+	//通讯录中保存的联系人数组
+	struct Person personArray[MAX];
+
+	//通讯录中当前记录联系人个数
+	int m_len;
+};
+
+//判断人满没有
+int RM(Addressbooks* ress);
+//判断人为空
+int Kong(Addressbooks* ress);
+//添加联系人
+void addPerson(Addressbooks* abs);
+//显示
+void showPerson(Addressbooks* abs);
+//判断联系人是否存在存在返回位置，不存在返回0
+int isExist(Addressbooks* abs, string name);
+//删除
+void deletePerson(Addressbooks* abs);
+//查找
+void findPerson(Addressbooks* abs);
+//修改联系人
+void modifyPerson(Addressbooks* abs);
+//清空
+void cleanPerson(Addressbooks* abs);
+
+
+
+
+============================================================xxx.cpp
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"tongxunlu.h"
+using namespace std;
+
+//判断人满
+int RM(Addressbooks* ress)
+{
+	if (ress->m_len == MAX)
+	{
+		cout << "满了" << endl;
+		return 1;
+	}
+	return 0;
+}
+
+//判断是否为空
+int Kong(Addressbooks* ress)
+{
+	if (ress->m_len == 0)
+	{
+		cout << "对不起为空" << endl;
+		return 1;
+	}
+	return 0;
+}
+
+//添加
+void addPerson(Addressbooks* abs)
+{
+	if (RM(abs))
+	{
+		//char c = '0';
+		//cout << "是否增容(Y/N)" << endl;
+		//cin >> c;
+		//if (strcmp(c,))
+		//{
+
+		//}
+		return;
+	}
+	else
+	{
+		//姓名
+		cout << "输入姓名" << endl;
+		string name;
+		cin >> name;
+		abs->personArray[abs->m_len].m_Name = name;//这样没有可判断空间了最好有临时的
+		//性别
+		cout << "输入性别" << endl;
+		cout << "1--男" << endl;
+		cout << "2--女" << endl;
+		int sex = 0;
+		while (true)
+		{
+			cin >> sex;
+			if (sex == 1)
+			{
+				abs->personArray[abs->m_len].m_Sex = 1;
+				break;
+			}
+			else if (sex == 2)
+			{
+				abs->personArray[abs->m_len].m_Sex = 2;
+				break;
+			}
+			else
+			{
+				cout << "错误重新输入" << endl;
+			}
+		}
+
+		//年龄
+		cout << "年龄" << endl;
+		int age = 0;
+		cin >> age;
+		abs->personArray[abs->m_len].m_Age = age;
+
+		//电话
+		cout << "电话" << endl;
+		string phone;
+		cin >> phone;
+		abs->personArray[abs->m_len].m_Phone = phone;
+
+		//住址
+		cout << "住址" << endl;
+		string address;
+		cin >> address;
+		abs->personArray[abs->m_len].m_Addr = address;
+
+		//更新人数
+		abs->m_len++;
+		cout << "添加成功" << endl;
+
+		//system是系统命令，之前的system("pause")是请安任意键
+		system("pause");
+		system("cls");
+	}
+}
+
+//显示
+void showPerson(Addressbooks* abs)
+{
+	if (Kong(abs))
+	{
+		
+	}
+	else
+	{
+		for (int i = 0; i < abs->m_len; i++)
+		{
+			cout << "姓名: " << abs->personArray[i].m_Name << "\t";
+			cout << "性别: " << (abs->personArray[i].m_Sex == 1?"男":"女") << "\t";
+			cout << "年龄: " << abs->personArray[i].m_Age << "\t";
+			cout << "电话: " << abs->personArray[i].m_Phone << "\t";
+			cout << "住址: " << abs->personArray[i].m_Addr << endl;
+		}
+	}
+	system("pause");
+	system("cls");
+}
+
+//判断是否存在
+int isExist(Addressbooks* abs, string name)
+{
+	for (int i = 0; i < abs->m_len; i++)
+	{
+		if (abs->personArray[i].m_Name == name)
+		{
+			return i;
+		}
+	}
+	cout << "没找到" << endl;
+	return -1;
+}
+
+//删除
+void deletePerson(Addressbooks* abs)
+{
+	cout << "请输入要删除联系人姓名：" << endl;
+	string name;
+	cin >> name;
+	int ret = isExist(abs, name);
+	if (ret == -1)
+	{
+		cout << "没找到" << endl;
+	}
+	else
+	{
+		//具体删除操作
+		if (ret == MAX)
+		{
+			cout << "满了,而且你这么删最后一个" << endl;
+			abs->m_len--;
+		}
+		for (int i = ret; i < abs->m_len; i++)
+		{
+			abs->personArray[i] = abs->personArray[i + 1];
+		}
+		abs->m_len--;
+		cout << "删除成功" << endl;
+	}
+	system("pause");
+	system("cls");
+}
+
+//查找
+void findPerson(Addressbooks* abs)
+{
+	cout << "请输入要查找联系人姓名：" << endl;
+	string name;
+	cin >> name;
+	int ret = isExist(abs, name);
+	if (ret == -1)
+	{
+		cout << "没找到" << endl;
+	}
+	else
+	{
+		cout << "姓名:" << abs->personArray[ret].m_Name;
+		cout << "性别:" << (abs->personArray[ret].m_Sex == 1 ? "男" : "女");
+		cout << "年龄:" << abs->personArray[ret].m_Age;
+		cout << "电话:" << abs->personArray[ret].m_Phone;
+		cout << "地址:" << abs->personArray[ret].m_Addr << endl;
+	}
+	system("pause");
+	system("cls");
+}
+
+//修改联系人
+void modifyPerson(Addressbooks* abs)
+{
+	cout << "请输入要修改联系人姓名：" << endl;
+	string name;
+	cin >> name;
+	int ret = isExist(abs, name);
+	if (ret == -1)
+	{
+		cout << "没找到" << endl;
+	}
+	else
+	{
+		string ch;
+		int val;
+		do
+		{
+			cout << "请输入修改的东西,如果不需要，输入不该" << endl;
+			cin >> ch;
+			if (ch == "姓名")
+			{
+				cout << "想要修改的值" << endl;
+				cin >> abs->personArray[ret].m_Name;
+				val = 1;
+			}
+			else if (ch == "性别")
+			{
+				cout << "想要修改的值 1or2" << endl;
+				cin >> abs->personArray[ret].m_Sex;
+				while (abs->personArray[ret].m_Sex != 1 && abs->personArray[ret].m_Sex != 2)
+				{
+					cout << "想要修改的值 1or2" << endl;
+					cin >> abs->personArray[ret].m_Sex;
+					cout << "请重新输入" << endl;
+				}
+				val = 1;
+			}
+			else if (ch == "年龄")
+			{
+				cout << "想要修改的值" << endl;
+				cin >> abs->personArray[ret].m_Sex;
+				val = 1;
+			}
+			else if (ch == "电话")
+			{
+				cout << "想要修改的值" << endl;
+				cin >> abs->personArray[ret].m_Sex;
+				val = 1;
+			}
+			else if (ch == "地址")
+			{
+				cout << "想要修改的值" << endl;
+				cin >> abs->personArray[ret].m_Sex;
+				val = 1;
+			}
+			else if(ch == "不改")
+			{
+				val = 0;
+			}
+			else
+			{
+				cout << "输入错误请重新输入" << endl;
+				val = 1;
+			}
+
+		} while (val);
+
+	}
+}
+
+//清空 - 只需要将记录的联系人改为0就可以了，从0开始，写的话从0开始覆盖
+void cleanPerson(Addressbooks* abs)
+{
+	abs->m_len = 0;
+	cout << "清空完毕" << endl;
+	system("pause");
+	system("cls");
+}
+
+
+
+
+=============================================main.cpp
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"tongxunlu.h"
+using namespace std;
+
+//通讯录管理系统
+//实现的功能如下
+// 增删查改，显示，清空，退出
+//姓名，性别，年龄，联系电话，家庭住址
+
+
+//菜单界面
+void showMenu()
+{
+	cout << "*************************" << endl;
+	cout << "***** 1、添加联系人 *****" << endl;
+	cout << "***** 2、显示联系人 *****" << endl;
+	cout << "***** 3、删除联系人 *****" << endl;
+	cout << "***** 4、查找联系人 *****" << endl;
+	cout << "***** 5、修改联系人 *****" << endl;
+	cout << "***** 6、清空联系人 *****" << endl;
+	cout << "***** 0、退出通讯录 *****" << endl;
+	cout << "*************************" << endl;
+}
+int main()
+{
+	//创建通讯录结构体变量
+	Addressbooks abs;
+	//初始化人员个数
+	abs.m_len = 0;
+	int select = 0;
+	do
+	{
+		showMenu();
+		cin >> select;
+		switch (select)
+		{
+		case 1://添加
+			addPerson(&abs);//传址
+			break;
+		case 2://显示
+			showPerson(&abs);
+			break;
+		case 3://删除
+			deletePerson(&abs);
+			break;
+		case 4://查找
+			findPerson(&abs);
+			break;
+		case 5://修改
+			modifyPerson(&abs);
+			break;
+		case 6://清空
+			cleanPerson(&abs);
+			break;
+		case 0://退出
+			cout << "拜拜" << endl;
+			break;
+		default://其他
+			cout << "错误鬼" << endl;
+			break;
+		}
+
+	} while (select);
+
+
+	system("pause");
+	return 0;
+}
