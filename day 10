@@ -1,0 +1,383 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<iostream>
+#include<math.h>
+#include<string>
+using namespace std;
+
+//引用的本质
+//本质：引用的本质在C++内部实现是一个指针常量
+//指针常量就是指向不可修改，值可以修改
+//注意所有指针的操作都是编译器帮我们操作
+
+//void func(int& ref)
+//{
+//	ref = 100;
+//}
+//int main()
+//{
+//	int a = 10;
+//	int& ref = a;
+//	ref = 20;
+//
+//	cout << "a" << a << endl;
+//	cout << "ref" << ref << endl;
+//
+//	func(a);
+//
+//	system("pause");
+//	return 0;
+//}
+
+//常量引用
+//作用：常量引用主要用来修饰型参，防止误操作
+// 在函数型参列表中，可以加const修饰型参，防止型参改变实参
+
+//打印数据
+//void showValue(const int& val)
+//{
+//	//val = 100;//不能在打印里改了，这个只是打印用的
+//	cout << "val = " << val << endl;
+//}
+//
+//int main()
+//{
+//	int a = 10;
+//	//int& ref = 10;//引用必须引用一块合法的内存空间
+//	const int& ref = 10;//加上const之后编译器将代码修改为int temp = 10(创建一个临时变量是10); const int & ref = temp(然后在指向它);
+//	//ref = 20;//不行了，不能修改,但是一般是不会用在这里的，是用在传参的时候加上的防止误操作
+//
+//	showValue(a);
+//	cout << "a = " << a << endl;
+//
+//	system("pause");
+//	return 0;
+//}
+
+//函数的提高
+// 在c++中函数的型参列表中的型参是可以有默认值的
+// 语法 - 返回值类型 函数名 (参数 = 默认值){}
+//
+//int func(int a, int b = 20, int c = 30)
+//{
+//	return a + b + c;
+//}
+
+//注意事项
+// 如果某个位置已经有了默认参数，那么从这个位置往后，从左到右都必须有默认值
+//int func2(int a, int b = 10, int c)//这个位置有了默认参数那后面都必须有默认参数才行，前面没有默认可以
+//{
+//	return a + b + c;
+//}
+
+//如果函数声明有默认参数，函数实现就不能有默认参数
+//总结：声明和实现只能有一个默认参数 - 如果声明有默认参数，那实现就不能有，如果实现有默认参数，那实现就不能有 
+//因为是二异性关系只能存在一个，说明可以一半，但是不推荐这样去做
+//int func2(int a = 10, int b = 10);
+//int func2(int a = 10, int b = 10)
+//{
+//	return a + b;
+//}
+//
+//int main()
+//{
+//	//cout << func(10,30) << endl;
+//	cout << func2(10,10) << endl;
+//
+//	system("pause");
+//	return 0;
+//}
+
+//函数的占位参数
+//c++中函数的型参列表里可以有占位参数，用来做占位，调用函数时必须填补该位置
+// 语法 - 返回值类型 函数名(数据类型){}
+
+//目前阶段的占位参数用不到，后面课程中会用到
+//占位参数可以时默认参数
+//void func(int a, int = 10)
+//{
+//	cout << "this is func" << endl;
+//}
+//
+//int main()
+//{
+//	//调用时函数必须填补位置
+//	func(10);//占位参数时默认参数时候就更没有意义了，但是后期会学习
+//
+//	system("pause");
+//	return 0;
+//}
+
+//函数重载
+//作用：函数名可以相同，提高复用性
+// 满足的条件
+//  同一个作用域下
+//  函数名称相同
+//  函数参数类型不同 或者 个数不同 或者 顺序不同
+//注意：函数的返回值不可以作为函数重载的条件
+
+//函数重载的满足条件
+//1、再同一个作用域下
+//2、函数名称相同
+//3、函数的参数类型不同，或者个数不同，或者顺序不同
+//void func()
+//{
+//	cout << "func的调用" << endl;
+//}
+////void func(int a = 10)//这个不行
+////{
+////	cout << "func(int a)的调用" << endl;
+////}
+//void func(int a)
+//{
+//	cout << "func(int a)的调用" << endl;
+//}
+//void func(float a)
+//{
+//	cout << "func(float a)的调用" << endl;
+//}
+//void func(int a, double b)
+//{
+//	cout << "func(int a, double b)的调用" << endl;
+//}
+//void func(double a, int b)
+//{
+//	cout << "func(double a,int b)的调用" << endl;
+//}
+////注意事项
+////函数的返回值不可以作为函数重载的条件
+//int func(double a, int b)
+//{
+//	cout << "func(double a,int b)的调用" << endl;
+//}
+//int main()
+//{
+//
+//	func(3.14,1);
+//	system("pause");
+//	return 0;
+//}
+
+//函数重载的注意事项
+//引用作为重载条件
+//函数重载碰到函数默认参数
+//void func(int& b)
+//{
+//	cout << "func(int& a)的调用" << endl;
+//}
+//void func(const int& b)
+//{
+//	cout << "func(const int& a)的调用" << endl;
+//}
+
+//函数重载碰到函数默认参数
+//void func2(int a)
+//{
+//	cout << "func2(int a)的调用" << endl;
+//}
+//void func2(int a,int b = 10)
+//{
+//	cout << "func2(int a, int b = 10)的调用" << endl;
+//}
+
+//int main()
+//{
+	//引用作为重载条件
+	//int a = 10;
+	//func(a);
+	//int& a = a;合法的
+	//const int& b = a;不合法
+
+	//func(10);
+	//int& a =10;不合法的
+	//const int& b = 10;合法
+ 
+	//函数重载碰到函数默认参数
+//	func2(10,20);//当函数重载碰到默认参数，出现二义性，错误，尽量避免，
+//
+//	system("pause");
+//	return 0;
+//}
+
+//类和对象
+// C++面向对面的三大特性为：封装，继承，多态
+// C++认为万事万物都皆为对象，对象上有其属性和行为
+//具有相同性质的对象，我们可以抽象称为类，人属于人类，车属于车类
+
+//封装
+// 封装是C++面向对象三大特性之一
+// 封装的意义
+//  将属性和行为作为一个整体，表现生活中的事物
+//  将属性和行为加以权限控制
+//封装意义一：
+// 在设计类的时候，属性和行为写在一起，表现事物
+// 语法 - class 类名{访问权限：属性/行为};
+
+//实列：设计一个圆类，求圆的周长
+//圆求周长的公式
+//class Circle
+//{
+//	//访问权限
+//	//公共权限
+//public:
+//	//属性
+//	int m_r;
+//	//行为
+//	//获取周长
+//	double calculateZC()
+//	{
+//		return 2 * 3.14 * m_r;
+//	}
+//	
+//};
+//
+//int main()
+//{
+//	//通过圆类 创建具体的圆(对象)
+//	//实列化 (通过一个类 创建一个对象过程)
+//	Circle c1;
+//	//给圆对象 的属性进行赋值
+//	c1.m_r = 10;
+//	cout << "圆的周长为：" << c1.calculateZC() << endl;
+//	system("pause");
+//	return 0;
+//}
+
+//设计一个学生类，属性有姓名和学号
+//可以给姓名和学号赋值，可以显示学生的姓名和学号
+
+//类成员一般前面加上m_前缀，可以清晰表示它是一个类的成员
+//class Student
+//{
+//public://类中的属性和行为 我们统一称为 成员
+//	//属性  成员属性 成员变量
+//	//行为  成员函数 成员方法
+//
+//	//属性
+//	string m_Name;//姓名
+//	int m_Id;//学号
+//
+//	//行为
+//	//显示姓名和学号
+//	void showStudent()
+//	{
+//		cout << "姓名：" << m_Name << " 学号：" << m_Id << endl;
+//	}
+//
+//	//给姓名赋值
+//	void setName(string name)
+//	{
+//		m_Name = name;
+//	}
+//
+//	//给学号赋值
+//	void setId(int id)
+//	{
+//		m_Id = id;
+//	}
+//};
+//
+//int main()
+//{
+//	//创建一个具体学生 实列化对象
+//	Student s1;
+//
+//	//给s1对象进行属性赋值操作
+//	//s1.m_Name = "张三";
+//	s1.setName("张三");
+//	//s1.m_Id = 1;
+//	s1.setId(1);
+//
+//	//显示学生信息
+//	s1.showStudent();
+//
+//	system("pause");
+//	return 0;
+//}
+
+//封装意义二
+//类在设计时，可以把属性和行为放在不同的权限下，加以控制
+// 访问权限有三种
+// public    公共权限  成员 类内可以访问  类外可以访问     公共的 - 可以这样理解
+// protected 保护权限  成员 类内可以访问  类外不可以访问   团体的 - 可以这样理解
+// private   私有权限  成员 类内可以访问  类外不可以访问   个人的 - 可以这样理解
+//后面两个有啥区别啊，我们后面学到继承的时候就能体会到区别了
+
+//class Person
+//{
+//	//这个大括号内就是类内，其他的就是类外了
+//public:
+//	//公共
+//	string m_Name; //姓名
+//
+//protected:
+//	//保护
+//	string m_Car;// 汽车
+//
+//private:
+//	//私有
+//	int m_Password;// 银行卡密码
+//
+//protected:
+//	void func()
+//	{
+//		m_Name = "张三";
+//		m_Car = "拖拉机";
+//		m_Password = 123456;
+//	}
+//};
+//
+//int main()
+//{
+//	Person p1;
+//	p1.m_Name = "李四";
+//	//p1.m_Car = "奔驰";//保护权限的内容，在类外访问不到
+//	//p1.m_Password = 123;//私有权限的内容，类外访问不到
+//
+//	//p1.func();//只有public 共有才能访问
+//
+//	system("pause");
+//	return 0;
+//}
+
+//struct和class区别
+//在C++中struct和class唯一区别就在于默认的访问权限不同
+// 区别
+//  struct 默认权限为公开
+//  class  默认权限为私有
+
+class C1
+{
+	int m_A;//默认权限 是 私有
+public:
+	void aaa(int* a)
+	{
+		printf("hello world\n");
+	}
+	class C1* next;
+};
+
+struct C2
+{
+	int m_A;//默认权限 是 公共
+	void aaa(int* a)
+	{
+		printf("hello world\n");
+	}
+	struct C2* next;
+};
+
+int main()
+{
+	//struct 和 class区别
+	//struct 默认权限为公开 public
+	//class  默认权限为私有 private
+	int a = 10;
+	class C2 c2;
+	struct C1 c1;
+	//c1.m_A;//在class里默认权限 私有 因此类外不可以访问
+	c2.m_A;//在struct默认的权限为公开，因此可以访问
+	c2.aaa(&a);
+	c1.aaa(&a);
+	system("pause");
+	return 0;
+}
