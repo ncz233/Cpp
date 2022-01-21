@@ -1,0 +1,454 @@
+========================================================point_and_circle.h
+#pragma once
+#include<iostream>
+using namespace std;
+
+class Point//坐标 or 点
+{
+public:
+	void setX(int x);
+
+	int getX();
+
+
+	void setY(int y);
+
+	int getY();
+
+
+private:
+	int m_X;
+	int m_Y;
+};
+
+//圆
+class Circle
+{
+public:
+	void setR(int r);
+
+	int getR();
+
+
+	void setCenter(Point center);
+
+	Point getCenter();
+
+
+private:
+	int m_R;//半径
+
+	//核心内容，在类中可以让另一个类 作为本来中的成员
+	Point m_Center;//圆心
+};
+
+
+
+
+=====================================================point_and_circle.cpp
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"point_and_circle.h"
+
+//点
+
+void Point::setX(int x)
+{
+	m_X = x;
+}
+int Point::getX()
+{
+	return m_X;
+}
+
+void Point::setY(int y)
+{
+	m_Y = y;
+}
+int Point::getY()
+{
+	return m_Y;
+}
+
+
+//圆
+
+void Circle::setR(int r)
+{
+	m_R = r;
+}
+int  Circle::getR()
+{
+	return m_R;
+}
+
+void  Circle::setCenter(Point center)
+{
+	m_Center = center;
+}
+Point  Circle::getCenter()
+{
+	return m_Center;
+}
+
+
+
+
+=========================================================day 11.cpp
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"point_and_circle.h"
+using namespace std;
+
+//成员属性私有化
+//将所有成员属性设置为私有，可以自己控制读写权限
+//对于写权限，我们可以检测数据的有效性
+
+//class Person
+//{
+//public:
+//	//做接口，写年龄
+//	void setName(string name)
+//	{
+//		m_Name = name;
+//	}
+//	//获取名字
+//	string getName()
+//	{
+//		return m_Name;
+//	}
+//
+//	//获取年龄
+//	int getAge()
+//	{
+//		//m_Age = 0;
+//		return m_Age;//没赋值会是乱码所以先赋值
+//	}
+//	void setAge(int age)
+//	{
+//		if (age>=0 && age<=150)
+//		{
+//			m_Age = age;
+//		}
+//		else
+//		{
+//			printf("不合法99归一\n");
+//			m_Age = 0;
+//			return;
+//		}
+//	}
+//
+//	//设置情人
+//	void setLover(string lover)
+//	{
+//		m_Lover = lover;
+//	}
+//
+//private:
+//	//姓名 可读 可写
+//	string m_Name;
+//	//年龄 只读 - 可读可写，如果想修改（年龄必须是0~150之间）
+//	int m_Age;
+//	//情人 只写
+//	string m_Lover;
+//
+//};
+//
+//int main()
+//{
+//	Person p;
+//	//p.m_Name = "张三";//不能访问
+//	//要用到接口间接访问
+//	p.setName("张三");
+//	cout << "姓名为：" << p.getName() << endl;
+//
+//	//p.m_Age = 18;//是不行的，因为它没在公共区，也没有间接访问的函数
+//	//p.setAge(18);//在公共区没有该成员
+//	p.setAge(1231);
+//	cout << "年龄为：" << p.getAge() << endl;
+//
+//	//情人设置完
+//	p.setLover("李四");
+//	//cout << "情人为：" << p.m_Lover << endl;//不能访问
+//
+//	return 0;
+//}
+
+//案列：设置立方体类(Cude)
+//求出立方体的面积和体积
+//分别用全局函数和成员函数判断两个立方体是否相等。
+
+//class Cube
+//{
+//public:
+//
+//	void setL(int l)
+//	{
+//		m_L= l;
+//	}
+//	int getL()
+//	{
+//		return m_L;
+//	}
+//	void setW(int w)
+//	{
+//		m_W = w;
+//	}
+//	int getW()
+//	{
+//		return m_W;
+//	}
+//	void setH(int h)
+//	{
+//		m_H = h;
+//	}
+//	int getH()
+//	{
+//		return m_H;
+//	}
+//
+//	int calculateS()
+//	{
+//		return m_L * m_W * 6;
+//	}
+//	int calculateV()
+//	{
+//		return m_L * m_W * m_H;
+//	}
+//
+//	//成员函数相等
+//	bool isSameByClass(Cube* c)
+//	{
+//		if (m_L == c->getL() && m_W == c->getW() && m_H == c->getH())
+//		{
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
+//
+//private:
+//	int m_L;
+//	int m_W;
+//	int m_H;
+//};
+//
+////全局函数判断相等
+//bool isSame(Cube* c1,Cube* c2)
+//{
+//	if (c1->getL() == c2->getL() && c1->getW() == c2->getW() && c1->getH() == c2->getH())
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
+//
+//int main()
+//{
+//	Cube c1;
+//	c1.setL(10);
+//	c1.setW(10);
+//	c1.setH(10);
+//
+//	cout << "c1的面积：" << c1.calculateS() << endl;
+//	cout << "c1的体积：" << c1.calculateV() << endl;
+//
+//	Cube c2;
+//	c2.setL(10);
+//	c2.setW(10);
+//	c2.setH(10);
+//
+//	//bool ret = isSame(&c1, &c2) == 0 ? false : true;
+//	if (isSame(&c1, &c2))
+//	{
+//		cout << "c1和c2是相等的 全局" << endl;
+//	}
+//	else
+//	{
+//		cout << "不相等的 全局" << endl;
+//	}
+//
+//	if (c1.isSameByClass(&c2))
+//	{
+//		cout << "c1和c2是相等的 成员" << endl;
+//	}
+//	else
+//	{
+//		cout << "不相等的 成员" << endl;
+//	}
+//
+//	return 0;
+//}
+
+
+//平面直角坐标系中点和圆的关系
+//点
+//class Point//坐标 or 点
+//{
+//public:
+//	void setX(int x)
+//	{
+//		m_X = x;
+//	}
+//	int getX()
+//	{
+//		return m_X;
+//	}
+//
+//	void setY(int y)
+//	{
+//		m_Y = y;
+//	}
+//	int getY()
+//	{
+//		return m_Y;
+//	}
+//
+//private:
+//	int m_X;
+//	int m_Y;
+//};
+//
+////圆
+//class Circle
+//{
+//public:
+//	void setR(int r)
+//	{
+//		m_R = r;
+//	}
+//	int getR()
+//	{
+//		return m_R;
+//	}
+//
+//	void setCenter(Point center)
+//	{
+//		m_Center = center;
+//	}
+//	Point getCenter()
+//	{
+//		return m_Center;
+//	}
+//
+//private:
+//	int m_R;//半径
+//	
+//	//核心内容，在类中可以让另一个类 作为本来中的成员
+//	Point m_Center;//圆心
+//};
+
+//void isInCircle(Circle* c, Point* p)
+//{
+//	//两点之间的距离
+//	int distance = (c->getCenter().getX() - p->getX()) * (c->getCenter().getX() - p->getX()) +
+//		(c->getCenter().getY() - p->getY()) * (c->getCenter().getY() - p->getY());
+//
+//	//计算半径的平方
+//	int rDistance = c->getR() * c->getR();
+//
+//	//判断关系
+//	if (distance == rDistance)
+//	{
+//		cout << "点在圆上" << endl;
+//	}
+//	else if (distance > rDistance)
+//	{
+//		cout << "点在圆外" << endl;
+//	}
+//	else
+//	{
+//		cout << "点在圆内" << endl;
+//	}
+//}
+//
+//int main()
+//{
+//	//创建圆
+//	Circle c;
+//	c.setR(10);
+//	Point cente;
+//	cente.setX(10);
+//	cente.setY(0);
+//	c.setCenter(cente);
+//
+//	//创建点
+//	Point p;
+//	p.setX(10);
+//	p.setY(10);
+//	
+//	//判断关系
+//	isInCircle(&c, &p);
+//
+//	return 0;
+//}
+
+//对象的初始化和清理
+// C++中的面向对象来源于生活，每个对象也都会有初始设置以及 对象销毁前的清理数据的设置
+//利用到构造函数和析构函数
+// 对象的初始化和清理也是两个非常重要的安全问题
+//  一个对象或者变量没有初始化状态，对其使用后果是未知的
+//  同样的使用完一个对象和变量，没有及时清理，也会造成一定的安全问题
+// C++利用了构造函数和析构函数解决上述问题，这两个函数将会被编译器自动调用，完成对象初始化和清理工作。
+// 对象的初始化和清理工作是编译器强制要我们做的事情，因此如果我们不提供构造和析构，编译器会提供。(编译器提供的构造函数和析构函数是空实现的)
+//  构造函数：主要作用在于创建对象时为对象的成员属性赋值，构造函数由编译器自动调用，无需手动调用。
+//  析构函数：主要作用在于对象销毁前系统自动调用，执行一些清理工作
+//
+// 构造函数语法 - 类名(){}
+//  构造函数，没有返回值也不写void
+//  函数名称与类名相同
+//  构造函数可以有参数，因此可以发生重载
+//  程序在调用对象时候会自动调用构造，无需手动调用，而且只会调用一次
+// 
+// 析构函数语法 - ~类名(){}
+//  析构函数，没有返回值也不写void
+//  函数名称与类名相同，在名称前面加上符号~
+//  析构函数不可以有参数，因此不可以发生重载
+//  程序在对象销毁前会自动调用析构，无须手动调用，而且只会调用一次
+
+//对象的初始化和清理。你不写编译器会给你写，不过里面是空的。
+//只能调用一次，初始化是在构造函数第一用，清理是析构函数最后用。
+//class Person
+//{
+//public:
+//	// 1.构造函数 进行初始化操作
+//	//  构造函数，没有返回值也不写void
+//	//	函数名称与类名相同
+//	//	构造函数可以有参数，因此可以发生重载
+//	//	程序在调用对象时候会自动调用构造，无需手动调用，而且只会调用一次
+//	Person()
+//	{
+//		cout << "person 构造函数调用" << endl;
+//	}
+//
+//	//2.析构函数 进行清理的操作
+//	// 析构函数，没有返回值也不写void
+//	//  函数名称与类名相同，在名称前面加上符号~
+//	//  析构函数不可以有参数，因此不可以发生重载
+//	//  程序在对象销毁前会自动调用析构，无须手动调用，而且只会调用一次
+//	~Person()
+//	{
+//		cout << "person 析构函数调用" << endl;
+//	}
+//
+//
+//};
+//
+//void test01()
+//{
+//	Person p;
+//}
+//int main()
+//{
+//	//test01();
+//	Person p;
+//
+//	system("pause");
+//	return 0;
+//}
+
+//构造函数的分类及调用
+//
