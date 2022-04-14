@@ -83,3 +83,370 @@ using namespace std;
 //}
 
 //左移运算符重载
+//总结：重载左移运算符配合元友可以实现输出自定义数据类型
+//class Person
+//{
+//	friend ostream& operator<<(ostream& cout, Person& p);
+//public:
+//	Person(int a,int b)
+//	{
+//		m_A = a;
+//		m_B = b;
+//	}
+//
+//private:
+//	//利用成员函数重载 左移运算符  p.operator<<(cout) 简化版本 p << cout
+//	//不会利用成员函数重载<<运算符，因为无法实现cout在左侧
+//	//void operator<<( cout )
+//	//{
+//
+//	//}
+//
+//	int m_A;
+//	int m_B;
+//
+//
+//};
+//
+////只能全局函数重载左移运算符
+//ostream& operator<<(ostream& cout, Person& p)//本质 operator<< (cout,p) 简化 cout << p
+//{
+//	cout << "m_A = " << p.m_A << "\nm_B = " << p.m_B;
+//	return cout;
+//}
+//
+//void test01()
+//{
+//	Person p(10,10);
+//	//p.m_A = 10;
+//	//p.m_B = 10;
+//
+//	cout << p << "" << endl;
+//}
+//int main()
+//{
+//	test01();
+//	system("pause");
+//	return 0;
+//}
+
+//递增运算符重载
+//作用：通过重载递增运算符，实现自己的整型数据
+
+//自定义的整型
+//class MyInteger
+//{
+//	friend ostream& operator<<(ostream& out, MyInteger p);
+//
+//public:
+//	MyInteger()
+//	{
+//		m_Num = 0;
+//	}
+//
+//	//重载前置++
+//	MyInteger& operator++()//为什么是地址不是值呢，如果是值返回的是另一个对象，虽然看上去成功了，但只++了一次。地址返回的都是一个对象所以可以++无限次。
+//	{
+//		//先做++的操作
+//		m_Num++;
+//
+//		//this是指向自身的*是解引用
+//		return *this;
+//	}
+//	//重置后置++
+//	//MyInteger operator++(int)//这个int代表占位参数，可以区分前置和后置递增或递减(它只认int)
+//	MyInteger operator++(int)//为什么后置返回值了，如果返回地址，返回的是局部变量的引用，局部变量出了这个函数会销毁所以返回了空指针，所以要返回值
+//	{
+//		//先 记录当前的结果，
+//		MyInteger temp = *this;
+//
+//		//后 递增
+//		m_Num++;
+//
+//		//最后返回记录的结果
+//		return temp;
+//	}
+//
+//private:
+//
+//	int m_Num;
+//
+//};
+//
+////重载左移运算符
+//ostream& operator<<(ostream& out, MyInteger p)
+//{
+//	cout << "m_Num = " << p.m_Num << endl;
+//	return out;
+//}
+//
+//void test01()
+//{
+//	MyInteger myint;
+//	cout << ++(++myint) << endl;
+//	cout << myint << endl;
+//}
+//
+//void test02()
+//{
+//	MyInteger myint;
+//	cout << myint++ << endl;
+//	cout << myint << endl;
+//}
+//
+//int main()
+//{
+//	//test01();
+//	test02();
+//
+//	system("pause");
+//	return 0;
+//}
+
+//赋值运算符重载
+//c++编译器至少给一个类添加4个函数
+// 默认构造函数(无参，函数体为空)
+// 默认析构函数(无参，函数体为空)
+// 默认拷贝构造函数，对属性进行值拷贝
+// 赋值运算符operator=，对属性进行拷贝
+
+//class Person
+//{
+//public:
+//	Person(int age)
+//	{
+//		m_Age = new int(age);
+//	}
+//	Person(Person& p)
+//	{
+//		p.m_Age = new int(*m_Age);
+//	}
+//	~Person()
+//	{
+//		if (m_Age != NULL)
+//		{
+//			delete m_Age;
+//			m_Age = NULL;
+//		}
+//	}
+//
+//	//重载赋值运算符
+//	Person& operator=(Person& p)
+//	{
+//		//编译器提供的浅拷贝
+//		//m_Age = p.m_Age;
+//
+//		//应该先判断是否有属性在堆区，如果有先释放干净，然后在深拷贝
+//		if (m_Age != NULL)
+//		{
+//			delete m_Age;
+//			m_Age = NULL;
+//		}
+//		
+//		//深拷贝操作
+//		m_Age = new int(*p.m_Age);
+//
+//		//返回对象的本身
+//		return *this;
+//
+//	}
+//
+//	int* m_Age;
+//
+//private:
+//
+//};
+//
+//void test01()
+//{
+//	Person p1(18);
+//	Person p2(20);
+//	Person p3(30);
+//
+//	p3 = p2 = p1;//隐藏风险浅拷贝，解决：深拷贝，练等是链式代码，返回值不可能是空
+//
+//	cout << "p1的年龄为：" << *p1.m_Age << endl;
+//	cout << "p2的年龄为：" << *p2.m_Age << endl;
+//	printf("p3的年龄为：%d\n", *p3.m_Age);
+//}
+//
+//int main()
+//{
+//	test01();
+//
+//	/*int a = 10;
+//	int b = 20;
+//	int c = 30;
+//	c = b = a;
+//	cout << "a = " << a << endl;
+//	cout << "b = " << b << endl;
+//	cout << "c = " << c << endl;*/
+//
+//	system("pause");
+//	return 0;
+//}
+
+//关系运算符重载
+// 作用：重载关系运算符可以让两个自定义类型对象进行对比操作
+//< > = !=
+//class Person
+//{
+//public:
+//	Person(string name, int age);
+//	~Person();
+//
+//	string m_Name;
+//	int m_Age;
+//	
+//	//重载 == 符号
+//	bool operator==(Person& p)
+//	{
+//		if (m_Name == p.m_Name && m_Age == p.m_Age)
+//		{
+//			return true;
+//		}
+//		return false;
+//		
+//	}
+//
+//	//重载 != 符号
+//	bool operator!=(Person& p)
+//	{
+//		if (m_Name == p.m_Name && m_Age == p.m_Age)
+//		{
+//			return false;
+//		}
+//		return true;
+//	}
+//
+//};
+//
+//Person::Person(string name, int age)
+//{
+//	m_Name = name;
+//	m_Age = age;
+//}
+//
+//Person::~Person()
+//{
+//}
+//
+//void test01()
+//{
+//	Person p1("tom", 18);
+//	Person p2("jerry", 18);
+//	Person p3("jerry",20);
+//
+//	if (p1 == p2)
+//	{
+//		cout << "p1 = p2" << endl;
+//	}
+//	else
+//	{
+//		cout << "p1 != p2" << endl;
+//	}
+//
+//	if (p1 != p2)
+//	{
+//		cout << "p1 != p2" << endl;
+//	}
+//	else
+//	{
+//		cout << "p1 = p2" << endl;
+//	}
+//}
+//
+//int main()
+//{
+//	test01();
+//
+//	system("pause");
+//	return 0;
+//}
+
+//函数调用运算符重载
+// 函数调用运算符()也可以重载
+// 由于重载后使用的方式非常像函数的调用，因此称为仿函数
+// 仿函数没有固定的写法，非常灵活
+
+class Myparson
+{
+public:
+	Myparson();
+	~Myparson();
+	//很像个函数
+	void operator()(string test)
+	{
+		cout << test << endl;
+		//printf("%s\n", test);
+	}
+
+private:
+
+};
+
+Myparson::Myparson()
+{
+}
+
+Myparson::~Myparson()
+{
+}
+
+void MyParson02(string test)//用函数也行
+{
+	cout << test << endl;
+}
+
+void test01()
+{
+	Myparson myParson;
+	myParson("hello world");//由于使用起来非常类似于函数调用，因此称为仿函数
+
+	MyParson02("hello world");
+
+}
+
+//仿函数非常灵活，没有固定的写法：如
+//在写个加法类
+class MyAdd
+{
+public:
+	MyAdd();
+	~MyAdd();
+
+	int operator()(int num1, int num2)
+	{
+		return num1 + num2;
+	}
+
+private:
+
+};
+
+MyAdd::MyAdd()
+{
+}
+
+MyAdd::~MyAdd()
+{
+}
+
+void test02()
+{
+	MyAdd myAdd;
+	int ret = myAdd(1, 2);
+	printf("%d\n", ret);
+
+	//匿名的函数对象,执行玩就释放
+	cout << MyAdd()(100, 100) << endl;
+
+}
+
+int main()
+{
+	test01();
+	test02();
+	system("pause");
+	return 0;
+}
