@@ -739,3 +739,111 @@ int main()
 //	system("pause");
 //	return 0;
 //}
+
+//继承中的对象模型
+// 问题：从父类继承过来的成员，那些属于子类对象中?
+
+//class Base
+//{
+//public:
+//	Base();
+//	~Base();
+//	int m_A;
+//protected:
+//	int m_B;
+//
+//private:
+//	int m_C;
+//
+//};
+//
+//Base::Base()
+//{
+//}
+//
+//Base::~Base()
+//{
+//}
+//
+//class Son :public Base
+//{
+//public:
+//	int m_D;
+//};
+//
+//void test01()
+//{
+//	//可能是4，12，16 答案是16
+//	//父类中所有非静态成员属性都会被子类继承下去
+//	//父类中私有的成员属性 是被编译器给隐藏了，因此访问不道，但是确实被继承下去了
+//	cout << "size of Son = " << sizeof(Son) << endl;
+//}
+//
+////利用开发人员命令提示符工具查看对象模型(Developer Command Prompt for VS 2019)
+//// 跳转盘符 C: (这个程序存在的盘中)
+//// 跳转文件路径 cd 具体的路径下
+//// 查看命令
+//// cl /d1 reportSingleClassLayout类的类名 "文件名"
+////在 vs2019开发人员命令提示符中cl /d1 reportSingleClassLayout类的类名 "文件名"
+//
+//int main()
+//{
+//	test01();
+//
+//	system("pause");
+//	return 0;
+//}
+
+//继承中构造和析构的顺序
+//子类继承父类后，当创建子类对象，也会调用父类的构造函数
+// 问题：父类和子类的构造和析构顺序谁先谁后 (现有子类对象还是父类对象)
+
+class Base
+{
+public:
+	Base();
+	~Base();
+
+private:
+
+};
+
+Base::Base()
+{
+	cout << "Base构造函数" << endl;
+}
+
+Base::~Base()
+{
+	cout << "Base析构函数" << endl;
+}
+
+class Son :public Base
+{
+public:
+	Son()
+	{
+		cout << "Son构造函数" << endl;
+	}
+	~Son()
+	{
+		cout << "Son析构函数" << endl;
+	}
+};
+
+void test01()
+{
+	//Base b;
+	
+	//继承中的构造和析构顺序如下：
+	//先构造父类，在构造子类，析构的顺序于构造的顺序相反(说白了就是栈! 先进后出)
+	Son s;
+}
+
+int main()
+{
+	test01();
+
+	system("pause");
+	return 0;
+}
