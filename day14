@@ -806,3 +806,88 @@ int main()
 	system("pause");
 	return 0;
 }
+
+//案列 - 电脑组装
+//电脑主要组成零件为cpu，显卡，内存条
+
+class CPU
+{
+public:
+	CPU();
+	~CPU();
+	virtual void calculate() = 0;
+
+};
+
+CPU::CPU()
+{
+}
+
+CPU::~CPU()
+{
+}
+
+class GPU
+{
+public:
+	GPU();
+	~GPU();
+	virtual void display() = 0;
+
+};
+
+GPU::GPU()
+{
+}
+
+GPU::~GPU()
+{
+}
+
+class Memory
+{
+public:
+	Memory();
+	~Memory();
+	virtual void storage() = 0;
+};
+
+Memory::Memory()
+{
+}
+
+Memory::~Memory()
+{
+}
+
+class Intel :public CPU
+{
+	void calculate()
+	{
+		printf("这是英特尔的cpu\n");
+	}
+};
+
+class Computer
+{
+public:
+	Computer();
+	~Computer();
+
+
+};
+
+Computer::Computer()
+{
+}
+
+Computer::~Computer()
+{
+}
+
+int main()
+{
+
+	system("pause");
+	return 0;
+}
