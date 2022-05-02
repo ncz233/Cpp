@@ -263,3 +263,77 @@ int main()
 	system("pause");
 	return 0;
 }
+
+//读文件
+//读文件与写文件步骤相似，但是读取方式相对于比较多
+//步骤略(就是ofs变成ifs)
+//但读取有4种方式
+//总结
+//读文件可以利用ifstream，或者fstream类
+// 利用is_open函数可以判断文件是否打开成功
+// close关闭文件
+//
+
+//文本文件的读文件
+void test01()
+{
+	//包含头文件
+
+	//创建流
+	ifstream ifs;
+
+	//打开文件 并且判断是否打开成功
+	ifs.open("C:\\我的文件夹\\云备份\\OneDrive\\桌面\\学习\\新建文件夹\\人数表.txt", ios::in);
+
+	//判断
+	if (ifs.is_open())
+	{
+		printf("打开成功\n");
+	}
+	else
+	{
+		printf("打开失败\n");
+		return;
+	}
+
+	//读数据(4种)
+	
+	//第一种
+	//char buf[1024] = { 0 };
+	//while (ifs >> buf)
+	//{
+	//	cout << buf << endl;
+	//}
+	
+	//第二种
+	//char buf[1024] = { 0 };
+	//while (ifs.getline(buf,1024))
+	//{
+	//	cout << buf << endl;
+	//}
+
+	//第三种
+	//string buf;
+	//while (getline(ifs,buf))
+	//{
+	//	cout << buf << endl;
+	//}
+	
+	//第四种(全读取，会读取到文件尾，也就是EOF)
+	char c;
+	while (( c = ifs.get()) != EOF)//EOF end of file (文件尾)
+	{
+		cout << c;
+	}
+
+	//关闭
+	ifs.close();
+
+}
+
+int main()
+{
+	test01();
+	system("pause");
+	return 0;
+}
