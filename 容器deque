@@ -1,0 +1,396 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<string>
+#include<iostream>
+#include<deque>
+#include<algorithm>
+using namespace std;
+
+//deque容器基本概念 - 双端数组,可以对头端进行插入删除操作 (代课 容器)
+//deque和vector区别
+//vector对于头部的插入删除效率低,数据量越大,效率越低
+//deque相对而言,对头部的插入数组速度会比vector快
+//vector访问元素的速度会比deque快,这和两者内部实现有关
+//
+//deque运行原理
+// deque内部有个中控器,维护每段缓冲区中的内容,缓冲区中存放真实数据
+// 中控器维护的是每个缓冲区的地址,使得使用deque时像一片连续的内存空间
+// deque容器的迭代器也是支持随机访问的
+// 如果头插或尾插溢出会在缓冲器记录地址位置,而那一个地址位置是溢出的数组的位置,大体看就是链表(双向的好像,反正不是单向的)
+//
+//deque构造函数
+// 函数原型
+// deque<T> deq;	//默认构造形式
+// deque(beg,end);	//构造函数将(beg,end)区间中的元素拷贝给本身
+// deque(n, elem);	//构造函数将n个elem拷贝给本身
+// deque(const deque &deq);	//拷贝构造函数
+// 
+
+//typedef int dataType;
+//void printDeque(const deque<dataType>& d)//加了const就不能改这个数了
+//{
+//	for (deque<dataType>::const_iterator i = d.begin(); i < d.end(); i++)//因为传参中加了const所以容器iterator也必须加
+//	{
+//		//*i = 100;//因为传参中加了const,所以就不能改了,增加代码的鲁棒性
+//		cout << *i << " ";
+//	}
+//	cout << endl;
+//}
+//
+//void test01()
+//{
+//	deque<dataType>d1;
+//	for (int i = 0; i < 10; i++)
+//	{
+//		d1.push_back(i);
+//	}
+//	printDeque(d1);
+//
+//	deque<dataType>d2(d1.begin(), d1.end());
+//	printDeque(d2);
+//
+//	deque<dataType>d3(10, 100);
+//	printDeque(d3);
+//
+//	deque<dataType>d4(d3);
+//	printDeque(d4);
+//}
+//
+//int main()
+//{
+//	test01();
+//
+//	system("puase");
+//	return 0;
+//}
+
+//deque赋值操作 - 给deque容器进行赋值
+//函数原型
+// deque& operator=(const deque &deq);	//重载等号操作符
+// assign(beg, end);	//将[beg,end]区间中的数据拷贝赋值给本身
+// assign(n, elem);	//将n个elem拷贝赋值给本身
+//总结:deque的赋值操作也与vector相同,需要熟练掌握
+
+//typedef int dataType;
+//void printDeque(const deque<dataType>& d)//加了const就不能改这个数了
+//{
+//	for (deque<dataType>::const_iterator i = d.begin(); i < d.end(); i++)//因为传参中加了const所以容器iterator也必须加
+//	{
+//		//*i = 100;//因为传参中加了const,所以就不能改了,增加代码的鲁棒性
+//		cout << *i << " ";
+//	}
+//	cout << endl;
+//}
+//
+//void test01()
+//{
+//	deque<dataType>d1;
+//	for (int i = 0; i < 10; i++)
+//	{
+//		d1.push_back(i);
+//	}
+//	printDeque(d1);
+//
+//	//=赋值
+//	deque<dataType>d2;
+//	d2 = d1;
+//	printDeque(d2);
+//
+//	//assign赋值
+//	deque<dataType>d3;
+//	d3.assign(d1.begin(), d1.end());
+//	printDeque(d3);
+//
+//	//n个elem
+//	deque<dataType>d4;
+//	d4.assign(10, 100);
+//	printDeque(d4);
+//}
+//
+//int main()
+//{
+//	test01();
+//
+//	system("puase");
+//	return 0;
+//}
+
+//deque大小操作 - 对deque容器的大小进行操作 
+// 函数原型
+// deque.empty();	//判断容器是否为空, 为空返回真
+// deque.size();	//返回容器中元素个数
+// deque.resize(num);	//重新指定容器长度为num,若容器变长,则以默认值填充新位置,如果容器变短,则末尾超出容器长度的元素被删除
+// deque.resize(num,elem);	//重新指定容器长度为num,若容器变长,则以elem填充新位置,如果容器变短,则末尾超出容器长度的元素被删除
+//deque与vector区别之一,没有容量只有个数
+// 
+// 总结
+// deque是没有容量的概念的
+// 判断是否为空 -- empty (为空返回真)
+// 返回元素个数 -- size
+// 重新指定个数 -- resize
+
+//容器大小操作
+//typedef int dataType;
+//void printDeque(const deque<dataType>& d)//加了const就不能改这个数了
+//{
+//	for (deque<dataType>::const_iterator i = d.begin(); i < d.end(); i++)//因为传参中加了const所以容器iterator也必须加
+//	{
+//		//*i = 100;//因为传参中加了const,所以就不能改了,增加代码的鲁棒性
+//		cout << *i << " ";
+//	}
+//	cout << endl;
+//}
+//
+//void test01()
+//{
+//	deque<dataType>d1;
+//	for (int i = 0; i < 10; i++)
+//	{
+//		d1.push_back(i);
+//	}
+//	printDeque(d1);
+//
+//	if (d1.empty())
+//	{
+//		cout << "空" << endl;
+//	}
+//	else
+//	{
+//		cout << "不为空" << endl;
+//		cout << "d1的大小 = " << d1.size() << endl;
+//		//d1.capa//depue容器没有容量概念
+//	}
+//
+//	//重新指定大小
+//	d1.resize(15);
+//	printDeque(d1);
+//	d1.resize(20, 1);
+//	printDeque(d1);
+//
+//	d1.resize(5);
+//	printDeque(d1);
+//}
+//
+//int main()
+//{
+//	test01();
+//
+//	system("puase");
+//	return 0;
+//}
+
+//deque插入和删除 - 向deque容器中插入和删除数据
+//函数原型
+// 两端插入操作
+// push_back(elem);	//在容器尾插
+// push_front(elem);	//在容器头插
+// pop_back();	//在容器尾删
+// pop_front();	//在容器头删
+// 指定位置(迭代器指定)
+// insert(pos,elem);	//在pos位置插入一个elem元素的拷贝,返回新数据的位置
+// insert(pos,n,elem);	//在pos位置插入n个elem数据,无返回值
+// insert(pos,beg,end);	//在pos位置插入[beg,end]区间的数据,无返回值
+// clear();	//清空容器中所有数据
+// erase(beg,end);	//删除[beg,end]区间的数据,返回下一个数据的位置
+// erase(pos);	//删除pos位置的数据,返回下一个数据位置
+//总结
+//插入和删除提供的位置是迭代器
+// 尾插 - push_back
+// 尾删 - pop_back
+// 头插 - push_front
+// 头删 - pop_front
+
+//deque插入和删除
+//typedef int dataType;
+//void printDeque(const deque<dataType>& d)//加了const就不能改这个数了
+//{
+//	for (deque<dataType>::const_iterator i = d.begin(); i < d.end(); i++)//因为传参中加了const所以容器iterator也必须加
+//	{
+//		//*i = 100;//因为传参中加了const,所以就不能改了,增加代码的鲁棒性
+//		cout << *i << " ";
+//	}
+//	cout << endl;
+//}
+//
+//void test01()
+//{
+//	deque<dataType>d1;
+//	//尾插
+//	d1.push_back(10);
+//	d1.push_back(20);
+//
+//	//头插
+//	d1.push_front(100);
+//	d1.push_front(200);
+//
+//	//200 100 10 20
+//	printDeque(d1);
+//
+//	//尾删
+//	d1.pop_back();
+//	//200 100 10
+//	printDeque(d1);
+//
+//	//头删
+//	d1.pop_front();
+//	//100 10
+//	printDeque(d1);
+//
+//}
+//
+//void test02()
+//{
+//	deque<dataType>d1;
+//	d1.push_back(10);
+//	d1.push_back(20);
+//	d1.push_front(100);
+//	d1.push_front(200);
+//	//200 100 10 20
+//	printDeque(d1);
+//
+//	//insert插入
+//	d1.insert(d1.begin(), 1000);
+//	//1000 200 100 10 20
+//	printDeque(d1);
+//
+//	d1.insert(d1.begin(), 2, 10000);
+//	//10000 10000 1000 200 100 10 20
+//	printDeque(d1);
+//
+//	//按照区间进行插入
+//	deque<dataType>d2;
+//	d2.push_back(1);
+//	d2.push_back(2);
+//	d2.push_back(3);
+//	d1.insert(d1.begin(), d2.begin(), d2.end());
+//	//1 2 3 10000 10000 1000 200 100 10 20
+//	printDeque(d1);
+//}
+//
+//void test03()
+//{
+//	deque<dataType>d1;
+//	d1.push_back(10);
+//	d1.push_back(20);
+//	d1.push_front(100);
+//	d1.push_front(200);
+//
+//	//删除
+//	deque<dataType>::iterator it = d1.begin();
+//	it++;//偏移迭代器
+//	d1.erase(it);
+//	//200 10 20
+//	printDeque(d1);
+//
+//	//按照区间方式删除
+//	d1.erase(d1.begin(), d1.end());
+//	printDeque(d1);
+//	//清空
+//	d1.clear();
+//	printDeque(d1);
+//}
+//
+//int main()
+//{
+//	//test01();
+//	//test02();
+//	test03();
+//
+//	system("pause");
+//	return 0;
+//}
+
+//deque数据存取 - 对deque中的数据的存取操作
+//函数原型
+// at(int idx);	//返回索引idx所指的数据
+// operator[];	//返回索引idx所指的数据
+// front();	//返回容器中第一个数据元素
+// back();	//返回容器中最后一个数据元素
+//总结
+// 除了用迭代器获取deque容器中元素,[]和at也可以
+// front返回容器中第一个元素
+// back返回容器中最后一个元素
+
+//typedef int dataType;
+//void printDeque(const deque<dataType>& d)//加了const就不能改这个数了
+//{
+//	for (deque<dataType>::const_iterator i = d.begin(); i < d.end(); i++)//因为传参中加了const所以容器iterator也必须加
+//	{
+//		//*i = 100;//因为传参中加了const,所以就不能改了,增加代码的鲁棒性
+//		cout << *i << " ";
+//	}
+//	cout << endl;
+//}
+//
+//void test01()
+//{
+//	deque<dataType>d1;
+//	d1.push_back(10);
+//	d1.push_back(20);
+//	d1.push_back(30);
+//	d1.push_front(100);
+//	d1.push_front(200);
+//	d1.push_front(300);
+//	//printDeque(d1);
+//	//300 200 100 10 20 30
+//	//通过[]方式访问元素
+//	for (int i = 0; i < d1.size(); i++)
+//	{
+//		cout << d1[i] << " ";
+//	}
+//	cout << endl;
+//
+//	//通过at方式访问元素
+//	for (int i = 0; i < d1.size(); i++)
+//	{
+//		cout << d1.at(i) << " ";
+//	}
+//	cout << endl;
+//
+//	//访问呢头尾元素
+//	cout << "第一个元素 = " << d1.front() << endl;
+//	cout << "最后一个 = " << d1.back() << endl;
+//}
+//
+//int main()
+//{
+//	test01();
+//
+//	system("pause");
+//	return 0;
+//}
+
+//deque排序 - 利用算法实现对deque容器进行排序
+//算法
+// sort(iterator beg, iterator end);//对beg和end区间内元素进行排序
+// 
+
+typedef int dataType;
+void printDeque(const deque<dataType>& d)//加了const就不能改这个数了
+{
+	for (deque<dataType>::const_iterator i = d.begin(); i < d.end(); i++)//因为传参中加了const所以容器iterator也必须加
+	{
+		//*i = 100;//因为传参中加了const,所以就不能改了,增加代码的鲁棒性
+		cout << *i << " ";
+	}
+	cout << endl;
+}
+
+void test01()
+{
+	deque<dataType>d1;
+	for (int i = 0; i < 10; i++)
+	{
+		d1.push_back(i);
+	}
+	printDeque(d1);
+
+}
+
+int main()
+{
+	test01();
+
+	system("puase");
+	return 0;
+}
