@@ -494,3 +494,118 @@ using namespace std;
 //案例描述:将person自定义数据类型进行排序,person中属性有姓名,年龄,身高
 // 排序规则:按照年龄进行升序,如果年龄相同按照升高进行降序
 //
+//总结
+// 对于自定义的数据类型,必须要指定排序规则,否则编译器不知道如何进行排序
+// 高级排序只是在排序规则上在进行一次逻辑规则制定,并不复杂
+
+//list容器自定义类型排序案列
+class Person
+{
+public:
+	Person(string name, int age, float height);
+	~Person();
+
+	string m_Name;	//名字
+	int m_Age;	//年龄
+	float m_Height;	//身高
+
+//private:
+
+};
+
+typedef Person dataType;//typedef不能先定义为有的变量,只能后定义
+
+Person::Person(string name, int age, float height)
+{
+	this->m_Name = name;
+	this->m_Age = age;
+	this->m_Height = height;
+}
+
+Person::~Person()
+{
+}
+
+void printList(const list<dataType>& L)
+{
+	for (list<dataType>::const_iterator it = L.begin(); it != L.end(); it++)
+	{
+		cout << "姓名 = " << it->m_Name << "\t年龄 = " << it->m_Age << "\t身高 = " << (*it).m_Height << endl;
+	}
+}
+
+//特定规则的辅助排序算法 回调函数
+bool personAgeSort(dataType& p1, dataType& p2)
+{
+	if (p1.m_Age == p2.m_Age)
+	{
+		//年龄相同按照身高降序排序
+		return p1.m_Height > p2.m_Height;
+	}
+	else
+	{
+		return p1.m_Age < p2.m_Age;
+	}
+}
+
+//自己做的太废了
+//bool personHeightSort(dataType& p1, dataType& p2)
+//{
+//	return p1.m_Age < p2.m_Age;
+//
+//}
+
+void test01()
+{
+	//创建
+	list<dataType>L;
+
+	//准备数据
+	Person p1("小黑", 10, 145.1);
+	Person p2("小白", 34, 125.2);
+	Person p3("小a", 12, 135.3);
+	Person p4("小b", 23, 114.5);
+	Person p5("小d", 23, 118.5);
+	Person p6("小c", 23, 115.5);
+
+	//向容器中插入数据
+	L.push_back(p1);
+	L.push_back(p2);
+	L.push_back(p3);
+	L.push_back(p4);
+	L.push_back(p5);
+	L.push_back(p6);
+
+	//遍历容器
+	cout << "排序前" << endl;
+	printList(L);
+
+	//年龄排序
+	list<dataType>::iterator it = L.begin();
+	//因为person是自定义类型,要么回调函数或者仿函数,仿函数美学,用回调函数吧bool数据类型
+	L.sort(personAgeSort);
+	cout << "排序后" << endl;
+	printList(L);
+
+	//自己写的太废了
+	//身高排序
+	//for (list<dataType>::iterator it = L.begin(); it != L.end(); it++)
+	//{
+	//	list<dataType>::iterator i = L.begin();
+	//	list<dataType>::iterator j = ++i;
+	//	if (i->m_Age == j->m_Age)
+	//	{
+	//		L.sort(personHeightSort);
+	//	}
+	//}
+	//cout << "身高排序后" << endl;
+	//printList(L);
+}
+
+int main()
+{
+	test01();
+
+	system("pause");
+	return 0;
+}
