@@ -1,0 +1,173 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<algorithm>
+#include<iostream>
+#include<stdio.h>
+#include<memory>
+#include<string>
+#include<list>
+#include<vector>
+#include<ctime>
+using namespace std;
+
+//常用排序算法 - 掌握常用的排序算法
+//算法简介
+// sort	//对容器内元素进行排序
+// random_shuffle	//洗牌 指定范围内的元素随机调整次序
+// merge	//容器元素合并, 并存储到另一容器中
+// reverse	//反转指定范围的元素
+//总结
+// sort属于开发中最常用的算法之一,需熟练掌握
+// random_shuffle洗牌算法比较实用, 使用记得加随机数种子
+// merge合并的两个容器必须是有序序列
+// reverse反转区间元素, 面试题可能涉及到
+
+//sort - 对容器内元素进行排序
+//函数原型
+// sort(iterator beg, iterator end, _Pred);
+// 按值查找元素, 找到返回指定位置迭代器,找不到返回结束迭代器位置
+// beg	开始迭代器
+// end	结束ddq
+// _Pred	谓词(不写默认从小到大)
+
+//常用的排序算法sort
+//class myPrint
+//{
+//public:
+//	bool operator()(int val1, int val2)
+//	{
+//		return val1 > val2;
+//	}
+//};
+//
+//void test01()
+//{
+//	list<int> l;
+//	l.push_back(10);
+//	l.push_back(40);
+//	l.push_back(20);
+//	l.push_back(50);
+//	l.push_back(30);
+//
+//	//这个是链表内置的, 用sort只对顺序表类型才有用,区别只有beg - end 区间的参数,
+//	//l.sort(myPrint());//自己的仿函数
+//
+//	l.sort(greater<int>());//提供给你的大于接口
+//
+//	for (list<int>::iterator it = l.begin(); it != l.end(); it++)
+//	{
+//		cout << *it << " ";
+//		cout << endl;
+//	}
+//
+//}
+
+//random_shuffle - 洗牌 指定范围内的元素随机调整顺序
+//函数原型
+// random_shuffle(iterator beg, iterator end)
+// 指定范围内的元素随机调整次序
+// beg	开始迭代器
+// end	结束迭代器
+//void myPrint(int val)
+//{
+//	cout << val << " ";
+//}
+//
+//void test02()
+//{
+//
+//	vector<int> l;
+//	for (int i = 0; i < 10; i++)
+//	{
+//		l.push_back(i);
+//	}
+//	random_shuffle(l.begin(), l.end());
+//
+//	for_each(l.begin(), l.end(), myPrint);
+//	cout << endl;
+//}
+
+//merge - 两个容器元素合并, 并存储到另一容器中
+// 函数原型
+// merge(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);
+// beg1 容器开始1迭代器
+// end1 容器结束1迭代器
+// beg2 容器开始2迭代器
+// beg2 容器结束2迭代器
+// dest 目标容器开始迭代器
+
+//void test03()
+//{
+//	list<int> l1;
+//	for (int i = 0; i < 10; i++)
+//	{
+//		l1.push_back(i);
+//	}
+//
+//	list<int> l2;
+//	//两个容器必须相同序列
+//	for (int i = 10; i < 20; i++)
+//	{
+//		l2.push_back(i);
+//	}
+//
+//	list<int> l3;
+//	//给目标容器分配内存
+//	//int num = l1.size() + l2.size();
+//	l3.resize(l1.size() + l2.size());
+//
+//	merge(l1.begin(), l1.end(), l2.begin(), l2.end(), l3.begin());
+//
+//	for (list<int>::iterator it = l3.begin(); it != l3.end(); it++)
+//	{
+//		cout << *it << " ";
+//		cout << endl;
+//	}
+//
+//}
+
+//reverse - 将容器内元进行反转
+//函数原型
+// reverse(iterator beg, iterator end);
+// 反转指定范围的元素
+// beg 开始迭代器
+// end 结束迭代器
+
+void myPrint(int val)
+{
+	cout << val << " ";
+}
+
+void test04()
+{
+	list<int>l;
+	l.push_back(10);
+	l.push_back(30);
+	l.push_back(50);
+	l.push_back(20);
+	l.push_back(40);
+
+	cout << "反转前" << endl;
+	for_each(l.begin(), l.end(), myPrint);
+	cout << endl;
+
+	cout << "反转后" << endl;
+	reverse(l.begin(), l.end());
+	for_each(l.begin(), l.end(), myPrint);
+	cout << endl;
+
+}
+
+int main()
+{
+	srand((unsigned int)time(NULL));
+	//test01();//sort
+
+	//test02();//random_shuffle
+
+	//test03();//merge
+	
+	test04();//reverse
+
+	system("pause");
+	return 0;
+}
