@@ -1,0 +1,194 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<iostream>
+#include<vector>
+#include<list>
+#include<algorithm>
+using namespace std;
+
+//常用拷贝和替换算法 - 掌握常用的拷贝和替换算法
+//算法简介
+// copy	//容器内指定范围的元素拷贝到另一容器中
+// replace	//将容器内指定范围的旧元素修改为新元素
+// replace_if	//容器内指定范围满足条件的元素替换为新元素
+// swap	//互换两个容器的元素
+//总结
+// 利用copy算法再拷贝时,目标容器记得提前开辟空间
+// replace会替换区间内满足条件的元素
+// replace_if按条件查找,可以利用仿函数灵活筛选满足的条件
+// swap交换容器时,注意交换的容器要同种类型,(swap内部交换的是指针,所以内存不一样不用开辟内存)
+
+//copy - 容器内指定范围的元素拷贝到另一容器中
+//函数原型
+// copy(iterator beg, iterator end, iterator dest);
+// 按值查找元素,找到返回指定位置迭代器,找不到返回结束迭代器位置
+// beg 开始迭代器
+// end 结束迭代器
+// dest 目标起始迭代器
+
+//void myPrint(int val)
+//{
+//	cout << val << " ";
+//}
+//
+//void test01()
+//{
+//	list<int> l1;
+//	for (int i = 0; i < 10; i++)
+//	{
+//		l1.push_back(i);
+//	}
+//
+//	list<int> l2;
+//	l2.resize(l1.size());//提前开辟空间
+//
+//	copy(l1.begin(), l1.end(), l2.begin());
+//	for_each(l2.begin(), l2.end(), myPrint);
+//	cout << endl;
+//
+//}
+
+//replace - 将容器内指定范围的旧元素修改为新元素
+//函数原型
+// replace(iterator beg, iterator end, oldvalue, newvalue);
+// 将区间内旧元素替换成新元素
+// beg 开始ddq
+// end 结束迭代器
+// oldvalue 旧元素
+// newvalue 新元素
+//
+
+//class myPrint
+//{
+//public:
+//	void operator()(int val)
+//	{
+//		cout << val << " ";
+//	}
+//};
+//
+//void test02()
+//{
+//	list<int> l;
+//
+//	l.push_back(10);
+//	l.push_back(30);
+//	l.push_back(50);
+//	l.push_back(20);
+//	l.push_back(40);
+//	l.push_back(20);
+//
+//	cout << "替换前" << endl;
+//	for_each(l.begin(), l.end(), myPrint());
+//	cout << endl;
+//
+//	//将20替换成200
+//	replace(l.begin(), l.end(), 20, 200);
+//	cout << "替换后" << endl;
+//	for_each(l.begin(), l.end(), myPrint());
+//}
+
+//replace_if - 将区间内满足条件的元素,替换成指定元素
+//函数原型
+// replace_if(iterator beg, iterator end, _pren, newvalue);
+// 按条件替换元素,满足田间的替换成指定元素
+// beg 开始迭代器
+// end 结束迭代器
+// _pred 谓词
+// newvalue 替换的新元素
+
+//class MyPrint
+//{
+//public:
+//	void operator()(int val)
+//	{
+//		cout << val << " ";
+//	}
+//};
+//
+//class Greater30
+//{
+//public:
+//	bool operator()(int val)
+//	{
+//		return val >= 30;
+//	}
+//};
+//
+//void test03()
+//{
+//	list<int> l;
+//	l.push_back(10);
+//	l.push_back(30);
+//	l.push_back(50);
+//	l.push_back(20);
+//	l.push_back(40);
+//	l.push_back(30);
+//
+//	cout << "替换前" << endl;
+//	for_each(l.begin(), l.end(), MyPrint());
+//	cout << endl;
+//
+//	//将大于等于30替换成300
+//	replace_if(l.begin(), l.end(), Greater30(), 300);
+//	cout << "替换后" << endl;
+//	for_each(l.begin(), l.end(), MyPrint());
+//	cout << endl;
+//
+//}
+
+//swap - 呼唤两个容器的元素
+// swap(container c1, container c2);
+// 互换两个容器的元素
+// cl容器1
+// c2容器2
+
+void myPrint(int val)
+{
+	cout << val << " ";
+}
+
+void test04()
+{
+	list<int> l1;
+	list<int> l2;
+	
+	for (int i = 0; i < 10; i++)
+	{
+		l1.push_back(i);
+	}
+	
+	for (int i = 0; i < 9; i++)
+	{
+		l2.push_back(i + 10);
+	}
+
+	cout << "交换前" << endl;
+	for_each(l1.begin(), l1.end(), myPrint);
+	cout << endl;
+	for_each(l2.begin(), l2.end(), myPrint);
+	cout << endl;
+
+	cout << "-------" << endl;
+	cout << "交换后" << endl;
+	swap(l1, l2);//swap内部交换的是指针,所以内存不一样不用开辟内存
+	for_each(l1.begin(), l1.end(), myPrint);
+	cout << endl;
+	for_each(l2.begin(), l2.end(), myPrint);
+	cout << endl;
+
+}
+
+int main()
+{
+	//test01();//copy,用的不多,其实可以用拷贝构造函数或者operator=重新定义.
+
+	//test02();//replace
+
+	//test03();//replace_if
+
+	test04();//swap
+
+	system("pause");
+	return 0;
+}
