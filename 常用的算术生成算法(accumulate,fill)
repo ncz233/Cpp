@@ -1,0 +1,79 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<string>
+#include<list>
+#include<vector>
+#include<iostream>
+#include<algorithm>
+#include<functional>
+#include<numeric>
+using namespace std;
+
+//常用算术生成算法 - 掌握常用的算数生成算法
+//注意
+// 算数生成算法属于小型算法,使用时包含头文件为#include<numeric>
+//算法简介
+// accumulate	//计算容器中元素累计总和
+// fill	//像容器中添加元素
+//总结
+// accumulate使用时头文件注意是numeric,这个算法很实用
+// 利用fill可以将容器区间内元素填充为指定的值
+
+//accumulate - 计算区间内容器元素累计总和
+//函数原型
+// accumulate(iterator beg, iterator end, value);
+// 计算容器元素累计总和
+// beg 开始迭代器
+// end 结束迭代器
+// value 起始值
+//
+
+//void test01()
+//{
+//	list<int> l;
+//	for (int i = 0; i <= 100; i++)
+//	{
+//		l.push_back(i);
+//	}
+//
+//	//参数3 起始累加值
+//	int total = accumulate(l.begin(), l.end(), 1000);
+//	cout << total << endl;
+//}
+
+//fill - 向容器中填充指定的元素
+//函数原型
+// fill(iterator beg, iterator end, value);
+// 向容器中填充元素
+// beg 开始迭代器
+// end 结束迭代器
+// value 填充的值
+//
+
+void myPrint(int val)
+{
+	cout << val << " ";
+}
+
+void test02()
+{
+	list<int> l;
+	l.resize(10);//默认值0
+
+	//后期重新填充
+	fill(l.begin(), l.end(), 100);
+
+	for_each(l.begin(), l.end(), myPrint);
+	cout << endl;
+
+}
+
+int main()
+{
+	//test01();//accumulate
+
+	test02();//fill
+
+	system("pause");
+	return 0;
+}
