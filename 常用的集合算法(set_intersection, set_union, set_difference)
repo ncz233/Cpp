@@ -1,0 +1,157 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<iostream>
+#include<algorithm>
+#include<string>
+#include<list>
+using namespace std;
+
+typedef int dataType;
+
+//常用集合算法 - 掌握常用的集合算法
+// 算法简介
+// set_intersection	//求两个容器的交集(两个容器中重复的元素)
+// set_union	//求两个容器的并集(两个容器中不重复的元素)
+// set_difference	//求两个容器的差集(p1容器和p2容器的并集部分,反之同理)
+//总结
+//求交集的两个集合的必须的是有序序列(准确来说是有序升序序列,降序序列要用到谓词)
+// 目标容器开辟空间需要从两个容器中取小值
+// set_intersection返回值既是交集中最后一个元素的位置(遍历交集的时候用这个返回的就可以了)
+//求并集的两个集合必须的是有序序列(准确来说是有序升序序列,降序序列要用到谓词)
+// 目标容器开辟空间需要两个容器相加
+// set_union返回值既是并集集中最后一个元素的位置
+//求差集的两个集合必须的是有序序列(准确来说是有序升序序列,降序序列要用到谓词)
+// 目标容器开辟空间要从两个容器取较大值
+// set_difference返回值既是差集中最后一个元素的位置
+
+
+//set_intersection - 求两个容器的交集
+// 函数原型
+// set_intersection(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);
+// 求两个集合的交集
+// 注意:两个合集必须是有序序列
+// beg1 容器1开始迭代器
+// end1 容器1结束迭代器
+// beg2 容器2开始迭代器
+// end2 容器2结束迭代器
+// dest 目标容器开始迭代器
+//
+
+//void myPrint(dataType val)
+//{
+//	cout << val << " ";
+//}
+//
+//void test01()
+//{
+//	list<dataType> l1;
+//	list<dataType> l2;
+//	for (int i = 0; i < 10; i++)
+//	{
+//		l1.push_back(i);
+//		l2.push_back(i+5);
+//	}
+//
+//	list<dataType> lTarget;
+//	//目标容器需要提前开辟空间
+//	//最特殊的情况 两个大容器包含小容器 开辟空间 去小容器的size即可
+//	lTarget.resize(min(l1.size(),l2.size()));
+//
+//	//获取交集(交集的最后一个迭代器返回)
+//	list<dataType>::iterator itEnd = set_intersection(l1.begin(), l1.end(), l2.begin(), l2.end(), lTarget.begin());
+//	for_each(lTarget.begin(), itEnd, myPrint);//如果是自己的话多余的空间会初始化为零
+//	cout << endl;
+//}
+
+//set_union - 求两个合计的并集
+// 函数原型
+// set_union(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);
+// 求两个集合的并集
+// 注意:两个合集必须是有序序列
+// beg1 容器1开始迭代器
+// end1 容器1结束迭代器
+// beg2 容器2开始迭代器
+// end2 容器2结束迭代器
+// dest 目标容器开始迭代器
+//
+
+//void myPrint(dataType val)
+//{
+//	cout << val << " ";
+//}
+//
+//void test02()
+//{
+//	list<dataType> l1;
+//	list<dataType> l2;
+//
+//	for (int i = 0; i < 10; i++)
+//	{
+//		l1.push_back(i);
+//		l2.push_back(i+5);
+//	}
+//
+//	list<dataType> lTarget;
+//	//目标容器提前开辟空间
+//	//最特殊 两个集合没有一点交集, 并集就是两个容器size相加
+//	lTarget.resize(l1.size() + l2.size());
+//
+//	list<dataType>::iterator itEnd = set_union(l1.begin(), l1.end(), l2.begin(), l2.end(), lTarget.begin());
+//	for_each(lTarget.begin(), itEnd, myPrint);
+//	cout << endl;
+//}
+
+//set_difference - 求两个集合的差集
+// 函数原型
+// set_difference(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);
+// 求两个集合的并集
+// 注意:两个合集必须是有序序列
+// beg1 容器1开始迭代器
+// end1 容器1结束迭代器
+// beg2 容器2开始迭代器
+// end2 容器2结束迭代器
+// dest 目标容器开始迭代器
+//
+
+void myPrint(dataType val)
+{
+	cout << val << " ";
+}
+
+void test03()
+{
+	list<dataType> l1;
+	list<dataType> l2;
+	for (int i = 0; i < 10; i++)
+	{
+		l1.push_back(i);
+		l2.push_back(i+5);
+	}
+
+	//创建目标容器
+	list<dataType> lTarget;
+	//目标容器开辟空间
+	//最特殊情况 两个容器没有交集,取两个容器大的size作为目标容器开辟空间
+	lTarget.resize(max(l1.size(), l2.size()));
+
+	cout << "l1和l2的差集" << endl;
+	list<dataType>::iterator itEnd = set_difference(l1.begin(), l1.end(), l2.begin(), l2.end(), lTarget.begin());
+
+	for_each(lTarget.begin(), itEnd, myPrint);
+	cout << endl;
+	
+}
+
+
+int main()
+{
+	//test01();//set_intersection
+	
+	//test02();//set_union
+
+	test03();//set_difference
+
+	
+	system("pause");
+	return 0;
+}
