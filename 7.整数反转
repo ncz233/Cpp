@@ -1,0 +1,17 @@
+int reverse(int x){
+    int my_x = x;
+    long long my_rev = 0;
+
+    while(my_x != 0)
+    {
+        my_rev = my_rev * 10 + my_x % 10;
+        my_x = my_x / 10;
+    }
+
+    if((int)my_rev != my_rev)
+    {
+        return 0;
+    }
+    
+    return (int)my_rev;
+}
